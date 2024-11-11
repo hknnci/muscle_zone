@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:muscle_zone/app/services/local/app_service.dart';
+import 'package:muscle_zone/core/constants/routes.dart';
 
 class SplashController extends GetxController {
   final AppService _appService;
@@ -21,7 +22,7 @@ class SplashController extends GetxController {
       Get.offAllNamed(initialRoute);
     } catch (e) {
       print('Error during initialization: $e');
-      Get.offAllNamed('/home');
+      Get.offAllNamed(Routes.home);
     }
   }
 }

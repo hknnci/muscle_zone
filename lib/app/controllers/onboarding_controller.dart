@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:muscle_zone/app/models/onboarding_page_model.dart';
 import 'package:muscle_zone/app/services/local/shared_pref_service.dart';
+import 'package:muscle_zone/core/constants/routes.dart';
 import 'package:muscle_zone/core/widgets/texts/custom_text.dart';
 import 'package:muscle_zone/core/widgets/texts/gradient_text.dart';
 
@@ -54,10 +55,10 @@ class OnboardingController extends GetxController {
 
   Future<void> navigateToHome() async {
     await _sharedPref.setFirstLaunchCompleted();
-    Get.offNamed("/home");
+    Get.offNamed(Routes.home);
   }
 
-  //From here on it's UI Related
+  // UI Components
   Widget buildPage(OnboardingPageModel page) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
