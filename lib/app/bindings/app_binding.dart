@@ -3,7 +3,7 @@ import 'package:muscle_zone/app/controllers/home_controller.dart';
 import 'package:muscle_zone/app/controllers/onboarding_controller.dart';
 import 'package:muscle_zone/app/controllers/splash_controller.dart';
 import 'package:muscle_zone/app/services/exercise_service.dart';
-import 'package:muscle_zone/config/initial_routes.dart';
+import 'package:muscle_zone/app/services/local/app_service.dart';
 import 'package:muscle_zone/app/services/local/shared_pref_service.dart';
 import 'package:muscle_zone/core/utils/api_client.dart';
 
