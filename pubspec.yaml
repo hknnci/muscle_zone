@@ -16,6 +16,7 @@ dependencies:
   # Utils
   flutter_dotenv: ^5.2.1
   http: ^1.2.2
+  shared_preferences: ^2.3.3
 
   # UI components
   flutter_svg: ^2.0.14

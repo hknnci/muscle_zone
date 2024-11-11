@@ -1,20 +1,30 @@
 import 'package:get/get.dart';
 import 'package:muscle_zone/app/controllers/home_controller.dart';
 import 'package:muscle_zone/app/controllers/onboarding_controller.dart';
+import 'package:muscle_zone/app/controllers/splash_controller.dart';
 import 'package:muscle_zone/app/services/exercise_service.dart';
+import 'package:muscle_zone/config/initial_routes.dart';
+import 'package:muscle_zone/app/services/local/shared_pref_service.dart';
 import 'package:muscle_zone/core/utils/api_client.dart';
 
 class AppBinding implements Bindings {
   @override
   void dependencies() {
-    // For API Client
-    Get.lazyPut<ApiClient>(() => ApiClient());
-    Get.lazyPut<ExerciseService>(() => ExerciseService(Get.find<ApiClient>()));
+    // Core Services - Synchronously initializing basic services
+    Get.put(ApiClient());
 
-    // For Controllers
-    Get.lazyPut<HomeController>(
-      () => HomeController(Get.find<ExerciseService>()),
+    // Initialize SharedPrefService immediately
+    Get.put(SharedPrefService()).init();
+
+    // Other Services
+    Get.put(AppService(Get.find<SharedPrefService>()));
+    Get.put(ExerciseService(Get.find<ApiClient>()));
+
+    // Controllers
+    Get.put(SplashController(Get.find<AppService>()));
+    Get.lazyPut(
+      () => OnboardingController(Get.find<SharedPrefService>()),
     );
-    Get.lazyPut<OnboardingController>(() => OnboardingController());
+    Get.lazyPut(() => HomeController(Get.find<ExerciseService>()));
   }
 }

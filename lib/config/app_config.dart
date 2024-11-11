@@ -8,7 +8,4 @@ class AppConfig {
   // Localization
   static const List<String> supportedLanguages = ["en", "tr", "es"];
   static const String defaultLanguage = "en";
-
-  // App Launch
-  static bool isFirstLaunch = true;
 }

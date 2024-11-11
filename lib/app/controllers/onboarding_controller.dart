@@ -1,12 +1,16 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:muscle_zone/app/models/onboarding_page_model.dart';
+import 'package:muscle_zone/app/services/local/shared_pref_service.dart';
 import 'package:muscle_zone/core/widgets/texts/custom_text.dart';
 import 'package:muscle_zone/core/widgets/texts/gradient_text.dart';
 
 class OnboardingController extends GetxController {
+  final SharedPrefService _sharedPref;
   final PageController pageController = PageController();
   var currentPageIndex = 0.obs;
+
+  OnboardingController(this._sharedPref);
 
   final List<OnboardingPageModel> pages = [
     OnboardingPageModel(
@@ -37,25 +41,23 @@ class OnboardingController extends GetxController {
     currentPageIndex.value = index;
   }
 
-  void onNextButtonPressed() {
+  Future<void> onNextButtonPressed() async {
     if (isLastPage) {
-      navigateToHome();
+      await navigateToHome();
     } else {
       pageController.nextPage(
-        duration: Duration(milliseconds: 300),
+        duration: const Duration(milliseconds: 300),
         curve: Curves.easeInOut,
       );
     }
   }
 
-  void navigateToHome() {
+  Future<void> navigateToHome() async {
+    await _sharedPref.setFirstLaunchCompleted();
     Get.offNamed("/home");
   }
 
-  void skipOnboarding() {
-    navigateToHome();
-  }
-
+  //From here on it's UI Related
   Widget buildPage(OnboardingPageModel page) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,

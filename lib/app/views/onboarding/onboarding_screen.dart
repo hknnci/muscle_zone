@@ -69,7 +69,7 @@ class OnboardingScreen extends GetView<OnboardingController> {
                     opacity: controller.isLastPage ? 0.0 : 1.0,
                     duration: const Duration(milliseconds: 300),
                     child: TextButton(
-                      onPressed: controller.skipOnboarding,
+                      onPressed: controller.navigateToHome,
                       child: CustomText.labelLarge(
                         "Skip",
                         color: Get.theme.primaryColor,
