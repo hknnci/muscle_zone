@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:muscle_zone/app/controllers/onboarding_controller.dart';
+import 'package:muscle_zone/app/views/onboarding/controller/onboarding_controller.dart';
 import 'package:muscle_zone/core/widgets/background/gradient_background.dart';
 import 'package:muscle_zone/core/widgets/buttons/gradient_elevated_button.dart';
 import 'package:muscle_zone/core/widgets/texts/custom_text.dart';
 
-class OnboardingScreen extends GetView<OnboardingController> {
-  const OnboardingScreen({Key? key}) : super(key: key);
+class OnboardingView extends GetView<OnboardingController> {
+  const OnboardingView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

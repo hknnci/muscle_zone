@@ -1,19 +1,17 @@
 import 'package:get/get.dart';
-import 'package:muscle_zone/app/controllers/home_controller.dart';
-import 'package:muscle_zone/app/controllers/onboarding_controller.dart';
-import 'package:muscle_zone/app/controllers/splash_controller.dart';
+import 'package:muscle_zone/app/views/home/controller/home_controller.dart';
+import 'package:muscle_zone/app/views/onboarding/controller/onboarding_controller.dart';
+import 'package:muscle_zone/app/views/splash/controller/splash_controller.dart';
 import 'package:muscle_zone/app/services/exercise_service.dart';
-import 'package:muscle_zone/app/services/local/app_service.dart';
+import 'package:muscle_zone/config/app_service.dart';
 import 'package:muscle_zone/app/services/local/shared_pref_service.dart';
 import 'package:muscle_zone/core/utils/api_client.dart';
 
 class AppBinding implements Bindings {
   @override
   void dependencies() {
-    // Core Services - Synchronously initializing basic services
+    // Core Services - Synchronously initializing core services
     Get.put(ApiClient());
-
-    // Initialize SharedPrefService immediately
     Get.put(SharedPrefService()).init();
 
     // Other Services

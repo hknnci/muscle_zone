@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 
-import '../models/exercise_model.dart';
-import '../services/exercise_service.dart';
+import '../../../models/exercise_model.dart';
+import '../../../services/exercise_service.dart';
 
 class HomeController extends GetxController {
   final ExerciseService _exerciseService;

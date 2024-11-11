@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:muscle_zone/app/services/local/app_service.dart';
+import 'package:muscle_zone/config/app_service.dart';
 import 'package:muscle_zone/core/constants/routes.dart';
 
 class SplashController extends GetxController {

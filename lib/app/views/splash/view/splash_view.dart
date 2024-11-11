@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:muscle_zone/app/controllers/splash_controller.dart';
+import 'package:muscle_zone/app/views/splash/controller/splash_controller.dart';
 import 'package:muscle_zone/core/widgets/background/gradient_background.dart';
 
-class SplashScreen extends GetView<SplashController> {
-  const SplashScreen({Key? key}) : super(key: key);
+class SplashView extends GetView<SplashController> {
+  const SplashView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
