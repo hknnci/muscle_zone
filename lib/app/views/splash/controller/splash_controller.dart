@@ -15,8 +15,7 @@ class SplashController extends GetxController {
 
   Future<void> _initializeApp() async {
     try {
-      await Future.delayed(const Duration(seconds: 2));
-
+      await Future.delayed(const Duration(seconds: 3));
       // Get initial route and navigate
       final initialRoute = await _appService.getInitialRoute();
       Get.offAllNamed(initialRoute);
