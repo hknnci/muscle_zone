@@ -3,6 +3,8 @@ import 'package:http/http.dart' as http;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:muscle_zone/config/app_config.dart';
 import 'package:muscle_zone/core/constants/db_constants.dart';
+import 'package:muscle_zone/core/errors/api_exception.dart';
+import 'package:muscle_zone/core/errors/error_handler.dart';
 
 class ApiClient {
   final String baseUrl;
@@ -28,15 +30,22 @@ class ApiClient {
       queryParameters,
     );
 
-    final response = await http.get(uri, headers: defaultHeaders);
+    try {
+      final response = await http
+          .get(uri, headers: defaultHeaders)
+          .timeout(const Duration(seconds: 10));
 
-    if (response.statusCode == 200) {
-      final List<dynamic> data = jsonDecode(response.body);
-      return data
-          .map((json) => fromJson(json as Map<String, dynamic>))
-          .toList();
-    } else {
-      throw Exception("Failed to load data: ${response.statusCode}");
+      if (response.statusCode == 200) {
+        final List<dynamic> data = jsonDecode(response.body);
+        return data
+            .map((json) => fromJson(json as Map<String, dynamic>))
+            .toList();
+      } else {
+        handleError(response);
+      }
+    } catch (e) {
+      throw ApiException('Failed to fetch data', e.toString());
     }
+    return [];
   }
 }
