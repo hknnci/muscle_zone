@@ -1,13 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'exercise_model.dart';
+part of 'base_object_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-ExerciseModel _$ExerciseModelFromJson(Map<String, dynamic> json) =>
-    ExerciseModel(
+BaseObjectModel _$BaseObjectModelFromJson(Map<String, dynamic> json) =>
+    BaseObjectModel(
       id: json['id'] as String,
       name: json['name'] as String,
       bodyPart: json['bodyPart'] as String,
@@ -22,7 +22,7 @@ ExerciseModel _$ExerciseModelFromJson(Map<String, dynamic> json) =>
           .toList(),
     );
 
-Map<String, dynamic> _$ExerciseModelToJson(ExerciseModel instance) =>
+Map<String, dynamic> _$BaseObjectModelToJson(BaseObjectModel instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,

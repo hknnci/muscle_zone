@@ -24,7 +24,6 @@ dependencies:
   # UI components
   flutter_svg: ^2.0.14
   cached_network_image: ^3.4.1
-  google_fonts: ^6.2.1
 
 dev_dependencies:
   flutter_test:

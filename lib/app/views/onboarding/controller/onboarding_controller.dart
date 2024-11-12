@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:muscle_zone/app/models/onboarding_page_model.dart';
 import 'package:muscle_zone/app/services/local/shared_pref_service.dart';
 import 'package:muscle_zone/core/constants/routes.dart';
-import 'package:muscle_zone/core/widgets/texts/custom_text.dart';
-import 'package:muscle_zone/core/widgets/texts/gradient_text.dart';
 
 class OnboardingController extends GetxController {
   final SharedPrefService _sharedPref;

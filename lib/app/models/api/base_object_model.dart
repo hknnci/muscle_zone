@@ -1,9 +1,9 @@
 import 'package:json_annotation/json_annotation.dart';
 
-part 'exercise_model.g.dart';
+part 'base_object_model.g.dart';
 
 @JsonSerializable()
-class ExerciseModel {
+class BaseObjectModel {
   final String id;
   final String name;
   final String bodyPart;
@@ -13,7 +13,7 @@ class ExerciseModel {
   final List<String> secondaryMuscles;
   final List<String> instructions;
 
-  const ExerciseModel({
+  const BaseObjectModel({
     required this.id,
     required this.name,
     required this.bodyPart,
@@ -24,6 +24,6 @@ class ExerciseModel {
     required this.instructions,
   });
 
-  factory ExerciseModel.fromJson(Map<String, dynamic> json) =>
-      _$ExerciseModelFromJson(json);
+  factory BaseObjectModel.fromJson(Map<String, dynamic> json) =>
+      _$BaseObjectModelFromJson(json);
 }
