@@ -57,39 +57,4 @@ class OnboardingController extends GetxController {
     await _sharedPref.setFirstLaunchCompleted();
     Get.offNamed(Routes.home);
   }
-
-  // UI Components
-  Widget buildPage(OnboardingPageModel page) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Image.asset(
-          page.imagePath,
-          height: Get.height * 0.5,
-          fit: BoxFit.contain,
-        ),
-        const SizedBox(height: 20),
-        GradientText(page.title),
-        const SizedBox(height: 10),
-        CustomText.bodyLarge(
-          page.description,
-          textAlign: TextAlign.center,
-        ),
-      ],
-    );
-  }
-
-  Widget buildIndicator(int index) {
-    bool isActive = index == currentPageIndex.value;
-    return AnimatedContainer(
-      duration: const Duration(milliseconds: 300),
-      margin: const EdgeInsets.symmetric(horizontal: 4),
-      height: 10,
-      width: isActive ? 20 : 10,
-      decoration: BoxDecoration(
-        color: isActive ? const Color(0xFF8A2BE2) : Colors.grey,
-        borderRadius: BorderRadius.circular(5),
-      ),
-    );
-  }
 }

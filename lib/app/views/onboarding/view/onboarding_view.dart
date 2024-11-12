@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:muscle_zone/app/views/onboarding/controller/onboarding_controller.dart';
 import 'package:muscle_zone/core/widgets/background/gradient_background.dart';
+import 'package:muscle_zone/core/widgets/bar/page_indicator.dart';
 import 'package:muscle_zone/core/widgets/buttons/gradient_elevated_button.dart';
-import 'package:muscle_zone/core/widgets/texts/custom_text.dart';
+import 'package:muscle_zone/core/widgets/buttons/skip_button.dart';
+import 'package:muscle_zone/core/widgets/page/onboarding_page.dart';
 
 class OnboardingView extends GetView<OnboardingController> {
   const OnboardingView({Key? key}) : super(key: key);
@@ -27,7 +29,7 @@ class OnboardingView extends GetView<OnboardingController> {
                       itemBuilder: (context, index) {
                         return Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                          child: controller.buildPage(controller.pages[index]),
+                          child: OnboardingPage(page: controller.pages[index]),
                         );
                       },
                     ),
@@ -41,7 +43,10 @@ class OnboardingView extends GetView<OnboardingController> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: List.generate(
                           controller.pages.length,
-                          (index) => controller.buildIndicator(index),
+                          (index) => PageIndicator(
+                            isActive:
+                                index == controller.currentPageIndex.value,
+                          ),
                         ),
                       ),
                     ),
@@ -65,16 +70,9 @@ class OnboardingView extends GetView<OnboardingController> {
                 top: 10,
                 right: 16,
                 child: Obx(
-                  () => AnimatedOpacity(
-                    opacity: controller.isLastPage ? 0.0 : 1.0,
-                    duration: const Duration(milliseconds: 300),
-                    child: TextButton(
-                      onPressed: controller.navigateToHome,
-                      child: CustomText.labelLarge(
-                        "Skip",
-                        color: Get.theme.primaryColor,
-                      ),
-                    ),
+                  () => SkipButton(
+                    onPressed: controller.navigateToHome,
+                    isVisible: !controller.isLastPage,
                   ),
                 ),
               ),

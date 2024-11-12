@@ -13,15 +13,26 @@ dependencies:
   # State management, routing and dependency injection
   get: ^4.6.6
 
+  # Network
+  http: ^1.2.2
+  json_annotation: ^4.9.0
+
   # Utils
   flutter_dotenv: ^5.2.1
-  http: ^1.2.2
   shared_preferences: ^2.3.3
 
   # UI components
   flutter_svg: ^2.0.14
   cached_network_image: ^3.4.1
   google_fonts: ^6.2.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  # JSON serialization
+  build_runner: ^2.4.13
+  json_serializable: ^6.8.0
 
 flutter:
   uses-material-design: true

@@ -1,5 +1,8 @@
-import 'package:muscle_zone/core/constants/db_constants.dart';
+import 'package:json_annotation/json_annotation.dart';
 
+part 'exercise_model.g.dart';
+
+@JsonSerializable()
 class ExerciseModel {
   final String id;
   final String name;
@@ -10,7 +13,7 @@ class ExerciseModel {
   final List<String> secondaryMuscles;
   final List<String> instructions;
 
-  ExerciseModel({
+  const ExerciseModel({
     required this.id,
     required this.name,
     required this.bodyPart,
@@ -21,20 +24,6 @@ class ExerciseModel {
     required this.instructions,
   });
 
-  factory ExerciseModel.fromJson(Map<String, dynamic> json) {
-    return ExerciseModel(
-      id: json[DBConstants.key_id] ?? "",
-      name: json[DBConstants.key_name] ?? "",
-      bodyPart: json[DBConstants.key_bodyPart] ?? "",
-      equipment: json[DBConstants.key_equipment] ?? "",
-      gifUrl: json[DBConstants.key_gifUrl] ?? "",
-      target: json[DBConstants.key_target] ?? "",
-      secondaryMuscles: List<String>.from(
-        json[DBConstants.key_secondaryMuscles] ?? [],
-      ),
-      instructions: List<String>.from(
-        json[DBConstants.key_instructions] ?? [],
-      ),
-    );
-  }
+  factory ExerciseModel.fromJson(Map<String, dynamic> json) =>
+      _$ExerciseModelFromJson(json);
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+//Used in SplashView
 class ProgressBar extends StatelessWidget {
   final double begin;
   final double end;

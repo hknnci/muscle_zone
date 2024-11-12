@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:muscle_zone/app/views/splash/controller/splash_controller.dart';
 import 'package:muscle_zone/core/widgets/background/gradient_background.dart';
-import 'package:muscle_zone/core/widgets/bar/progress_bar_widget.dart';
+import 'package:muscle_zone/core/widgets/bar/progress_bar.dart';
 import 'package:muscle_zone/core/widgets/image/image_widget.dart';
 
 class SplashView extends GetView<SplashController> {

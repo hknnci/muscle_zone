@@ -10,7 +10,7 @@ class ExerciseService extends GetxService {
 
   Future<List<ExerciseModel>> getBodyPart(String bodyPart) async =>
       await apiClient.get(
-        path: DBConstants.path_bodyPart + "/$bodyPart",
+        path: "${DBConstants.path_bodyPart}/$bodyPart",
         fromJson: (json) => ExerciseModel.fromJson(json),
       );
 }
