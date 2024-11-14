@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:muscle_zone/app/models/api/base_object_model.dart';
 import 'package:muscle_zone/app/services/exercise_service.dart';
 import 'package:muscle_zone/core/constants/constants.dart';
+import 'package:muscle_zone/core/constants/app_keys.dart';
 import 'package:muscle_zone/core/utils/service_helper.dart';
 
 class HomeController extends GetxController {
@@ -25,7 +26,7 @@ class HomeController extends GetxController {
     await _serviceHelper.fetchData<String>(
       fetchFunction: _exerciseService.getBodyPartList,
       targetList: bodyParts,
-      errorMessage: "Failed to load body parts",
+      errorMessage: AppKeys.failedToLoadBodyParts,
     );
 
     // Removed Cardio part
@@ -45,7 +46,7 @@ class HomeController extends GetxController {
     await _serviceHelper.fetchData<BaseObjectModel>(
       fetchFunction: () => _exerciseService.getExercisesByBodyPart(bodyPart),
       targetList: exercises,
-      errorMessage: "Failed to load exercises",
+      errorMessage: AppKeys.failedToLoadExercises,
     );
   }
 }

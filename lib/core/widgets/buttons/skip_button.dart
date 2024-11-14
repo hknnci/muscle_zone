@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:muscle_zone/core/constants/app_keys.dart';
 import 'package:muscle_zone/core/widgets/texts/custom_text.dart';
 
 //Used in OnboardingView
@@ -21,7 +22,7 @@ class SkipButton extends StatelessWidget {
       child: TextButton(
         onPressed: isVisible ? onPressed : null,
         child: CustomText.labelLarge(
-          "Skip",
+          AppKeys.skip,
           color: Get.theme.primaryColor,
         ),
       ),

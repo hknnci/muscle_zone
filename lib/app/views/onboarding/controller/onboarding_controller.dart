@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:muscle_zone/app/models/onboarding_page_model.dart';
 import 'package:muscle_zone/app/services/local/shared_pref_service.dart';
 import 'package:muscle_zone/core/constants/routes.dart';
+import 'package:muscle_zone/core/constants/app_keys.dart';
+import 'package:muscle_zone/core/constants/constants.dart';
 
 class OnboardingController extends GetxController {
   final SharedPrefService _sharedPref;
@@ -13,22 +15,19 @@ class OnboardingController extends GetxController {
 
   final List<OnboardingPageModel> pages = [
     OnboardingPageModel(
-      imagePath: "assets/images/img_onboarding1.png",
-      title: "Welcome to MuscleZone",
-      description:
-          "Get ready to transform your body with the best exercises with or without equipment, at home or at gym.",
+      imagePath: Constants.path_onboardingImg1,
+      title: AppKeys.onboardingTitle1,
+      description: AppKeys.onboardingDesc1,
     ),
     OnboardingPageModel(
-      imagePath: "assets/images/img_onboarding2.png",
-      title: "Track Your Progress",
-      description:
-          "Track your progress and see the improvements you are making over time.",
+      imagePath: Constants.path_onboardingImg1,
+      title: AppKeys.onboardingTitle2,
+      description: AppKeys.onboardingDesc2,
     ),
     OnboardingPageModel(
-      imagePath: "assets/images/img_onboarding3.png",
-      title: "Start Now",
-      description:
-          "Let’s get started on your fitness journey today with personalized workouts.",
+      imagePath: Constants.path_onboardingImg1,
+      title: AppKeys.onboardingTitle3,
+      description: AppKeys.onboardingDesc3,
     ),
   ];
 
