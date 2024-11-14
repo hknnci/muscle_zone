@@ -167,7 +167,7 @@ class MaterialTheme {
       ),
       titleLarge: TextStyle(
         fontFamily: 'Poppins',
-        fontSize: 22,
+        fontSize: 20,
         fontWeight: FontWeight.normal,
       ),
       titleMedium: TextStyle(

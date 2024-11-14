@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:muscle_zone/app/models/api/base_object_model.dart';
 import 'package:muscle_zone/app/services/exercise_service.dart';
+import 'package:muscle_zone/core/constants/constants.dart';
 import 'package:muscle_zone/core/utils/service_helper.dart';
 
 class HomeController extends GetxController {
@@ -26,6 +27,16 @@ class HomeController extends GetxController {
       targetList: bodyParts,
       errorMessage: "Failed to load body parts",
     );
+
+    // Removed Cardio part
+    bodyParts.removeWhere((part) => part == 'cardio');
+
+    // Apply fixed custom body part order
+    bodyParts.sort((a, b) {
+      return Constants.customBodyPartsOrder
+          .indexOf(a)
+          .compareTo(Constants.customBodyPartsOrder.indexOf(b));
+    });
   }
 
   // Fetch Exercises by Body Part

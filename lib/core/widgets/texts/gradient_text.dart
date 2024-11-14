@@ -3,11 +3,11 @@ import 'package:muscle_zone/core/widgets/texts/custom_text.dart';
 
 class GradientText extends StatelessWidget {
   final String text;
-  final TextStyle? style;
+  final bool isAppBar;
 
   const GradientText(
     this.text, {
-    this.style,
+    this.isAppBar = false,
     Key? key,
   }) : super(key: key);
 
@@ -19,7 +19,9 @@ class GradientText extends StatelessWidget {
     return ShaderMask(
       blendMode: BlendMode.srcIn,
       shaderCallback: (bounds) => textGradient.createShader(bounds),
-      child: CustomText.headlineLarge(text),
+      child: isAppBar
+          ? CustomText.headlineSmall(text)
+          : CustomText.headlineLarge(text),
     );
   }
 }

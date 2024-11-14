@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      title: 'MusclZone',
+      title: 'MuscleZone',
       theme: MaterialTheme(const TextTheme()).light(),
       initialBinding: AppBinding(),
       defaultTransition: Transition.fade,
