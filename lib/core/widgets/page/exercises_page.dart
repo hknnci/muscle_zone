@@ -20,7 +20,23 @@ class ExercisesPage extends StatelessWidget {
           Image.network(
             exercise.gifUrl,
             fit: BoxFit.cover,
-            width: double.infinity,
+            loadingBuilder: (
+              BuildContext context,
+              Widget child,
+              ImageChunkEvent? loadingProgress,
+            ) {
+              // GIF loading indicator
+              if (loadingProgress == null) {
+                return child;
+              } else {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+            },
+            errorBuilder: (context, error, stackTrace) {
+              return const Text("Failed to load GIF");
+            },
           ),
           const SizedBox(height: 16),
           Column(
