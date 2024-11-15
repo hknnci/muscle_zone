@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:muscle_zone/app/views/home/controller/home_controller.dart';
+import 'package:muscle_zone/core/constants/routes.dart';
 import 'package:muscle_zone/core/widgets/background/gradient_background.dart';
 import 'package:muscle_zone/core/widgets/page/custom_grid.dart';
 import 'package:muscle_zone/core/widgets/texts/custom_text.dart';
 import 'package:muscle_zone/core/widgets/texts/gradient_text.dart';
-import 'package:muscle_zone/core/constants/app_keys.dart'; // Keys dosyasını import et
+import 'package:muscle_zone/core/constants/app_keys.dart';
 
 class HomeView extends GetView<HomeController> {
   const HomeView({Key? key}) : super(key: key);
@@ -40,7 +41,7 @@ class HomeView extends GetView<HomeController> {
                 child: CustomGrid(
                   bodyParts: controller.bodyParts,
                   onBodyPartSelected: (bodyPart) {
-                    controller.fetchExercisesByBodyPart(bodyPart);
+                    Get.toNamed(Routes.exercises, arguments: bodyPart);
                   },
                 ),
               );

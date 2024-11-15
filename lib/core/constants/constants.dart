@@ -1,5 +1,3 @@
-// lib/core/constants/constants.dart
-
 class Constants {
   // Body Parts fixed order
   static const List<String> customBodyPartsOrder = [

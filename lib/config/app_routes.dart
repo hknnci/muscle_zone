@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:muscle_zone/app/views/exercises/view/exercises_view.dart';
 import 'package:muscle_zone/app/views/home/view/home_view.dart';
 import 'package:muscle_zone/app/views/onboarding/view/onboarding_view.dart';
 import 'package:muscle_zone/app/views/splash/view/splash_view.dart';
@@ -17,6 +18,13 @@ class AppRoutes {
     GetPage(
       name: Routes.home,
       page: () => const HomeView(),
+    ),
+    GetPage(
+      name: Routes.exercises,
+      page: () {
+        final bodyPart = Get.arguments;
+        return ExercisesView(bodyPart: bodyPart);
+      },
     ),
   ];
 }

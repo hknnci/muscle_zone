@@ -10,6 +10,8 @@ void handleError(http.Response response) {
     case 500:
       throw ServerErrorException("Server Error: ${response.body}");
     default:
-      throw ApiException("Failed with status: ${response.statusCode}");
+      throw ApiException(
+        "Failed with status: ${response.statusCode} ${response.body}",
+      );
   }
 }

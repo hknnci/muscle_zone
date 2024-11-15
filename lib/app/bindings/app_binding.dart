@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:muscle_zone/app/views/exercises/controller/exercises_controller.dart';
 import 'package:muscle_zone/app/views/home/controller/home_controller.dart';
 import 'package:muscle_zone/app/views/onboarding/controller/onboarding_controller.dart';
 import 'package:muscle_zone/app/views/splash/controller/splash_controller.dart';
@@ -24,5 +25,9 @@ class AppBinding implements Bindings {
       () => OnboardingController(Get.find<SharedPrefService>()),
     );
     Get.lazyPut(() => HomeController(Get.find<ExerciseService>()));
+    Get.lazyPut(
+      () => ExercisesController(Get.find<ExerciseService>()),
+      fenix: true,
+    );
   }
 }

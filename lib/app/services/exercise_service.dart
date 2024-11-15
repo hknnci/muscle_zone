@@ -22,9 +22,17 @@ class ExerciseService extends GetxService {
         path: DBConstants.path_targetList,
       );
 
-  Future<List<BaseObjectModel>> getExercisesByBodyPart(String bodyPart) async =>
+  Future<List<BaseObjectModel>> getExercisesByBodyPart(
+    String bodyPart, {
+    int limit = 10,
+    int offset = 0,
+  }) async =>
       await apiClient.getList<BaseObjectModel>(
         path: "${DBConstants.path_bodyPart}/$bodyPart",
+        queryParameters: {
+          DBConstants.key_limit: "$limit",
+          DBConstants.key_offset: "$offset",
+        },
       );
 
   Future<List<BaseObjectModel>> getExercisesByEquipment(String type) async =>

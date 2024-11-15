@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-//Used in OnboardingView
 class PageIndicator extends StatelessWidget {
   final bool isActive;
 

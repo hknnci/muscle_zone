@@ -32,4 +32,19 @@ class CustomFlushbar {
       snackPosition: SnackPosition.BOTTOM,
     );
   }
+
+  static showInfo(String message) {
+    Get.snackbar(
+      AppKeys.info,
+      message,
+      backgroundColor: Colors.blue,
+      colorText: Colors.white,
+      icon: Icon(
+        Icons.info,
+        color: Colors.white,
+      ),
+      duration: Duration(seconds: 3),
+      snackPosition: SnackPosition.BOTTOM,
+    );
+  }
 }
