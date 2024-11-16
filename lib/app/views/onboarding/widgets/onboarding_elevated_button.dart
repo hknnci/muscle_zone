@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:muscle_zone/core/widgets/texts/custom_text.dart';
 
+/// A custom elevated button for onboarding screens.
 class OnboardingElevatedButton extends StatelessWidget {
-  final VoidCallback onPressed;
-  final String text;
-
+  /// Constructs an [OnboardingElevatedButton] widget.
   const OnboardingElevatedButton({
-    Key? key,
     required this.onPressed,
     required this.text,
-  }) : super(key: key);
+    super.key,
+  });
+
+  /// Callback function to handle button press.
+  final VoidCallback onPressed;
+
+  /// Text to be displayed on the button.
+  final String text;
 
   @override
   Widget build(BuildContext context) {

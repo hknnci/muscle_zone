@@ -2,10 +2,13 @@ import 'package:get/get.dart';
 import 'package:muscle_zone/config/app_service.dart';
 import 'package:muscle_zone/core/constants/routes.dart';
 
+/// Controller for the splash screen.
 class SplashController extends GetxController {
-  final AppService _appService;
-
+  /// Constructs a [SplashController] instance.
   SplashController(this._appService);
+
+  /// The app service instance.
+  final AppService _appService;
 
   @override
   void onInit() {
@@ -15,13 +18,12 @@ class SplashController extends GetxController {
 
   Future<void> _initializeApp() async {
     try {
-      await Future.delayed(const Duration(seconds: 3));
-      // Get initial route and navigate
+      await Future<void>.delayed(const Duration(seconds: 3));
       final initialRoute = await _appService.getInitialRoute();
-      Get.offAllNamed(initialRoute);
+      await Get.offAllNamed<dynamic>(initialRoute);
     } catch (e) {
       print('Error during initialization: $e');
-      Get.offAllNamed(Routes.home);
+      await Get.offAllNamed<dynamic>(Routes.home);
     }
   }
 }

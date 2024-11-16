@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:muscle_zone/app/views/home/controller/home_controller.dart';
 import 'package:muscle_zone/app/views/home/widgets/home_body.dart';
+import 'package:muscle_zone/core/constants/app_keys.dart';
 import 'package:muscle_zone/core/widgets/background/gradient_background.dart';
 import 'package:muscle_zone/core/widgets/texts/gradient_text.dart';
-import 'package:muscle_zone/core/constants/app_keys.dart';
 
+/// Widget that represents the home page view.
 class HomeView extends GetView<HomeController> {
-  const HomeView({Key? key}) : super(key: key);
+  /// Constructs a [HomeView] widget.
+  const HomeView({super.key});
 
   @override
   Widget build(BuildContext context) {

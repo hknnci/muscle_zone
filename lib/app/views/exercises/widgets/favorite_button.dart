@@ -2,25 +2,30 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:muscle_zone/app/models/api/base_object_model.dart';
 import 'package:muscle_zone/app/views/exercises/controller/exercises_controller.dart';
+import 'package:muscle_zone/app/views/exercises/widgets/favorite_list_bottomsheet.dart';
 import 'package:muscle_zone/app/views/favorite_list/controller/favorite_list_controller.dart';
 import 'package:muscle_zone/core/constants/app_keys.dart';
-import 'package:muscle_zone/app/views/exercises/widgets/favorite_list_bottomsheet.dart';
 import 'package:muscle_zone/core/widgets/progress/custom_flushbar.dart';
 
+/// A button widget that handles favoriting exercises.
+/// Displays different states based on whether the
+/// current exercise is favorited or not.
 class FavoriteButton extends StatelessWidget {
-  final ExercisesController controller;
-
+  /// Constructs a [FavoriteButton] widget.
   const FavoriteButton({
-    Key? key,
     required this.controller,
-  }) : super(key: key);
+    super.key,
+  });
+
+  /// The controller that manages the exercise data and state
+  final ExercisesController controller;
 
   @override
   Widget build(BuildContext context) {
     return Obx(() {
       if (controller.filteredExercises.isEmpty) {
-        return IconButton(
-          icon: const Icon(Icons.favorite),
+        return const IconButton(
+          icon: Icon(Icons.favorite),
           onPressed: null,
         );
       }
@@ -54,12 +59,12 @@ class FavoriteButton extends StatelessWidget {
   }
 
   void _showFavoriteListsBottomSheet(
-      BuildContext context, BaseObjectModel exercise) {
-    showModalBottomSheet(
+    BuildContext context,
+    BaseObjectModel exercise,
+  ) {
+    showModalBottomSheet<void>(
       context: context,
-      builder: (context) => FavoriteListsBottomSheet(
-        exerciseId: exercise.id,
-      ),
+      builder: (context) => FavoriteListsBottomSheet(exerciseId: exercise.id),
     );
   }
 }

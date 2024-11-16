@@ -4,18 +4,22 @@ import 'package:muscle_zone/app/views/favorite_list/controller/favorite_list_con
 import 'package:muscle_zone/core/constants/app_keys.dart';
 import 'package:muscle_zone/core/constants/routes.dart';
 
+/// A widget that displays the body of the favorite list screen.
+/// This includes a list of favorite exercise lists
+/// and functionality to add new lists.
 class FavoriteListBody extends StatelessWidget {
-  final FavoriteListController controller;
+  /// Constructs a [FavoriteListBody] widget.
+  const FavoriteListBody({required this.controller, super.key});
 
-  const FavoriteListBody({Key? key, required this.controller})
-      : super(key: key);
+  /// The controller that manages the favorite list functionality.
+  final FavoriteListController controller;
 
   @override
   Widget build(BuildContext context) {
     return Obx(() {
       if (controller.isAddingNewList.value) {
         return Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(16),
           child: Row(
             children: [
               Expanded(
@@ -28,7 +32,7 @@ class FavoriteListBody extends StatelessWidget {
               ),
               IconButton(
                 icon: const Icon(Icons.check),
-                onPressed: () => controller.saveNewList(),
+                onPressed: controller.saveNewList,
               ),
             ],
           ),
@@ -55,7 +59,7 @@ class FavoriteListBody extends StatelessWidget {
                 ),
               ],
             ),
-            onTap: () => Get.toNamed(
+            onTap: () => Get.toNamed<dynamic>(
               Routes.favoriteExercises,
               arguments: list,
             ),

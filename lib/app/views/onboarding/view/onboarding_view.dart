@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:muscle_zone/app/views/onboarding/controller/onboarding_controller.dart';
+import 'package:muscle_zone/app/views/onboarding/widgets/onboarding_elevated_button.dart';
+import 'package:muscle_zone/app/views/onboarding/widgets/onboarding_page.dart';
+import 'package:muscle_zone/app/views/onboarding/widgets/skip_button.dart';
 import 'package:muscle_zone/core/constants/app_keys.dart';
 import 'package:muscle_zone/core/widgets/background/gradient_background.dart';
 import 'package:muscle_zone/core/widgets/progress/page_indicator.dart';
-import 'package:muscle_zone/app/views/onboarding/widgets/onboarding_elevated_button.dart';
-import 'package:muscle_zone/app/views/onboarding/widgets/skip_button.dart';
-import 'package:muscle_zone/app/views/onboarding/widgets/onboarding_page.dart';
 
+/// A view that introduces app features to the user through onboarding screens.
 class OnboardingView extends GetView<OnboardingController> {
-  const OnboardingView({Key? key}) : super(key: key);
+  /// Constructs a [OnboardingView] widget.
+  const OnboardingView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +31,7 @@ class OnboardingView extends GetView<OnboardingController> {
                       padEnds: false,
                       itemBuilder: (context, index) {
                         return Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
                           child: OnboardingPage(page: controller.pages[index]),
                         );
                       },
@@ -39,7 +41,7 @@ class OnboardingView extends GetView<OnboardingController> {
                   // Page Indicator
                   Obx(
                     () => Padding(
-                      padding: const EdgeInsets.only(bottom: 16.0),
+                      padding: const EdgeInsets.only(bottom: 16),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: List.generate(

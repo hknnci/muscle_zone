@@ -1,24 +1,32 @@
 import 'package:flutter/material.dart';
 
-//Used in SplashView
+/// A progress bar widget used in the splash view.
 class ProgressBar extends StatelessWidget {
-  final double begin;
-  final double end;
-  final Duration duration;
-  final Curve curve;
-
+  /// Constructs a [ProgressBar] instance.
   const ProgressBar({
-    Key? key,
     this.begin = 0,
     this.end = 2,
     this.duration = const Duration(seconds: 3),
     this.curve = Curves.easeInOut,
-  }) : super(key: key);
+    super.key,
+  });
+
+  /// The beginning value of the progress bar.
+  final double begin;
+
+  /// The ending value of the progress bar.
+  final double end;
+
+  /// The duration of the progress bar animation.
+  final Duration duration;
+
+  /// The curve of the progress bar animation.
+  final Curve curve;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 60.0),
+      padding: const EdgeInsets.symmetric(horizontal: 60),
       child: TweenAnimationBuilder(
         tween: Tween<double>(begin: begin, end: end),
         duration: duration,

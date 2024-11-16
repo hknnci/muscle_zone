@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:muscle_zone/app/views/favorite_exercises/controller/favorite_exercises_controller.dart';
 import 'package:muscle_zone/core/constants/app_keys.dart';
-import 'package:muscle_zone/core/widgets/texts/custom_text.dart';
 import 'package:muscle_zone/core/extensions/string_extensions.dart';
+import 'package:muscle_zone/core/widgets/texts/custom_text.dart';
 
+/// A widget that displays the favorite exercises.
 class FavoriteExercisesBody extends GetView<FavoriteExercisesController> {
-  const FavoriteExercisesBody({Key? key}) : super(key: key);
+  /// Constructs a [FavoriteExercisesBody] widget.
+  const FavoriteExercisesBody({super.key});
 
   @override
   Widget build(BuildContext context) {

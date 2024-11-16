@@ -3,11 +3,16 @@ import 'package:get/get.dart';
 import 'package:muscle_zone/app/views/exercises/controller/exercises_controller.dart';
 import 'package:muscle_zone/core/extensions/string_extensions.dart';
 
+/// A bottom sheet widget that filters exercises by equipment.
 class EquipmentFilterBottomSheet extends StatelessWidget {
-  final ExercisesController controller;
+  /// Constructs an [EquipmentFilterBottomSheet] widget.
+  const EquipmentFilterBottomSheet({
+    required this.controller,
+    super.key,
+  });
 
-  const EquipmentFilterBottomSheet({Key? key, required this.controller})
-      : super(key: key);
+  /// The controller that manages the exercise data and state
+  final ExercisesController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +29,7 @@ class EquipmentFilterBottomSheet extends StatelessWidget {
             title: Text(equipment.toTitleCase()),
             onTap: () {
               controller.filterExercisesByEquipment(equipment);
-              Get.back();
+              Get.back<void>();
             },
           );
         },

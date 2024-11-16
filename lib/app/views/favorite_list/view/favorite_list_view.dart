@@ -5,15 +5,17 @@ import 'package:muscle_zone/app/views/favorite_list/widgets/favorite_list_body.d
 import 'package:muscle_zone/core/constants/app_keys.dart';
 import 'package:muscle_zone/core/widgets/texts/gradient_text.dart';
 
+/// A view widget that displays the list of favorites.
 class FavoriteListView extends GetView<FavoriteListController> {
-  const FavoriteListView({Key? key}) : super(key: key);
+  /// Constructs a [FavoriteListView] widget.
+  const FavoriteListView({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: GradientText(AppKeys.favoriteLists, isAppBar: true),
+        title: const GradientText(AppKeys.favoriteLists, isAppBar: true),
         actions: [
           IconButton(
             icon: const Icon(Icons.add),

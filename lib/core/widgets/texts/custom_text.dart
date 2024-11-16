@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+/// A utility class that provides custom text widgets with different styles.
 class CustomText {
+  /// Label Large
   static Widget labelLarge(
     String text, {
     Color? color,
@@ -18,7 +20,7 @@ class CustomText {
     );
   }
 
-  // Display Large
+  /// Display Large
   static Widget displayLarge(
     String text, {
     TextAlign textAlign = TextAlign.center,
@@ -33,7 +35,7 @@ class CustomText {
     );
   }
 
-  // Display Medium
+  /// Display Medium
   static Widget displayMedium(
     String text, {
     TextAlign textAlign = TextAlign.center,
@@ -48,7 +50,7 @@ class CustomText {
     );
   }
 
-  // Display Small
+  /// Display Small
   static Widget displaySmall(
     String text, {
     TextAlign textAlign = TextAlign.center,
@@ -63,7 +65,7 @@ class CustomText {
     );
   }
 
-  // Headline Large
+  /// Headline Large
   static Widget headlineLarge(
     String text, {
     TextAlign textAlign = TextAlign.center,
@@ -78,7 +80,7 @@ class CustomText {
     );
   }
 
-  // Headline Medium
+  /// Headline Medium
   static Widget headlineMedium(
     String text, {
     TextAlign textAlign = TextAlign.center,
@@ -93,7 +95,7 @@ class CustomText {
     );
   }
 
-  // Headline Small
+  /// Headline Small
   static Widget headlineSmall(
     String text, {
     TextAlign textAlign = TextAlign.center,
@@ -108,7 +110,7 @@ class CustomText {
     );
   }
 
-  // Title Large
+  /// Title Large
   static Widget titleLarge(
     String text, {
     TextAlign textAlign = TextAlign.center,
@@ -123,7 +125,7 @@ class CustomText {
     );
   }
 
-  // Title Medium
+  /// Title Medium
   static Widget titleMedium(
     String text, {
     TextAlign textAlign = TextAlign.center,
@@ -138,7 +140,7 @@ class CustomText {
     );
   }
 
-  // Title Small
+  /// Title Small
   static Widget titleSmall(
     String text, {
     TextAlign textAlign = TextAlign.center,
@@ -153,7 +155,7 @@ class CustomText {
     );
   }
 
-  // Body Large
+  /// Body Large
   static Widget bodyLarge(
     String text, {
     TextAlign textAlign = TextAlign.center,
@@ -168,7 +170,7 @@ class CustomText {
     );
   }
 
-  // Body Medium
+  /// Body Medium
   static Widget bodyMedium(
     String text, {
     TextAlign textAlign = TextAlign.center,
@@ -183,7 +185,7 @@ class CustomText {
     );
   }
 
-  // Body Small
+  /// Body Small
   static Widget bodySmall(
     String text, {
     TextAlign textAlign = TextAlign.center,

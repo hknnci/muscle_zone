@@ -8,32 +8,34 @@ import 'package:muscle_zone/app/views/onboarding/view/onboarding_view.dart';
 import 'package:muscle_zone/app/views/splash/view/splash_view.dart';
 import 'package:muscle_zone/core/constants/routes.dart';
 
+/// Class that manages the application's page routes
 class AppRoutes {
+  /// Returns the list of pages for the application.
   static final pages = [
-    GetPage(
+    GetPage<dynamic>(
       name: Routes.splash,
       page: () => const SplashView(),
     ),
-    GetPage(
+    GetPage<dynamic>(
       name: Routes.onboarding,
       page: () => const OnboardingView(),
     ),
-    GetPage(
+    GetPage<dynamic>(
       name: Routes.home,
       page: () => const HomeView(),
     ),
-    GetPage(
+    GetPage<dynamic>(
       name: Routes.exercises,
       page: () {
-        final bodyPart = Get.arguments;
+        final bodyPart = Get.arguments as String;
         return ExercisesView(bodyPart: bodyPart);
       },
     ),
-    GetPage(
+    GetPage<dynamic>(
       name: Routes.favoriteLists,
       page: () => const FavoriteListView(),
     ),
-    GetPage(
+    GetPage<dynamic>(
       name: Routes.favoriteExercises,
       page: () {
         final list = Get.arguments as FavoriteList;

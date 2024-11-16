@@ -3,15 +3,20 @@ import 'package:get/get.dart';
 import 'package:muscle_zone/core/constants/app_keys.dart';
 import 'package:muscle_zone/core/widgets/texts/custom_text.dart';
 
+/// A button that allows users to skip the onboarding process.
 class SkipButton extends StatelessWidget {
-  final VoidCallback onPressed;
-  final bool isVisible;
-
+  /// Constructs a [SkipButton] widget.
   const SkipButton({
-    Key? key,
     required this.onPressed,
     this.isVisible = true,
-  }) : super(key: key);
+    super.key,
+  });
+
+  /// Callback function to handle button press.
+  final VoidCallback onPressed;
+
+  /// Whether the button is visible.
+  final bool isVisible;
 
   @override
   Widget build(BuildContext context) {

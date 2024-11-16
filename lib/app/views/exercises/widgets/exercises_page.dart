@@ -7,8 +7,7 @@ import 'package:muscle_zone/core/extensions/string_extensions.dart';
 import 'package:muscle_zone/core/widgets/progress/page_indicator.dart';
 import 'package:muscle_zone/core/widgets/texts/custom_text.dart';
 
-/// A widget that displays a list of exercises in a page view format
-/// with indicators.
+/// A widget that displays a list of exercises in a page view format.
 class ExercisesBody extends GetView<ExercisesController> {
   /// Constructs an [ExercisesBody] widget.
   const ExercisesBody({super.key});
@@ -76,7 +75,7 @@ class _ExerciseContent extends StatelessWidget {
   /// Constructs an [_ExerciseContent] widget.
   const _ExerciseContent({required this.exercise});
 
-  /// The exercise to display.
+  /// The exercise to be displayed.
   final BaseObjectModel exercise;
 
   @override
@@ -98,7 +97,7 @@ class _ExerciseContent extends StatelessWidget {
               return const Center(child: CircularProgressIndicator());
             },
             errorBuilder: (context, error, stackTrace) {
-              return CustomText.bodyLarge(AppKeys.failedToLoadGif);
+              return const Text('Failed to load GIF');
             },
           ),
           const SizedBox(height: 16),

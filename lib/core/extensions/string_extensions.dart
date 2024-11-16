@@ -1,5 +1,7 @@
+/// Provides additional string manipulation methods
 extension StringExtensions on String {
-  // Capitalizes the first letter of each word of the word
+  /// Converts the string to title case by capitalizing
+  /// the first letter of each word
   String toTitleCase() {
     if (isEmpty) return this;
     return split(' ')

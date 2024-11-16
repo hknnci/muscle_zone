@@ -1,8 +1,9 @@
 import 'package:get/get.dart';
 import 'package:muscle_zone/core/constants/app_keys.dart';
-import 'package:muscle_zone/core/widgets/progress/custom_flushbar.dart';
 import 'package:muscle_zone/core/errors/api_exception.dart';
+import 'package:muscle_zone/core/widgets/progress/custom_flushbar.dart';
 
+/// Helper class containing utility methods for service calls.
 class ServiceHelper {
   /// Generic fetch method for data fetching and assigning to RxList.
   Future<void> fetchData<T>({

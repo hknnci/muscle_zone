@@ -1,14 +1,23 @@
+/// Application configuration constants
 class AppConfig {
-  // API Related
-  static const String rapidApiKey = "X-RapidAPI-Key";
-  static const String rapidApiHost = "X-RapidAPI-Host";
-  static const String apiKey = "API_KEY";
-  static const String apiHost = "API_HOST";
+  /// RapidAPI key header
+  static const String rapidApiKey = 'X-RapidAPI-Key';
 
-  // Localization
-  static const List<String> supportedLanguages = ["en", "tr", "es"];
-  static const String defaultLanguage = "en";
+  /// RapidAPI host header
+  static const String rapidApiHost = 'X-RapidAPI-Host';
 
-  //Others
-  static const String keyIsFirstLaunch = "isFirstLaunch";
+  /// API key
+  static const String apiKey = 'API_KEY';
+
+  /// API host
+  static const String apiHost = 'API_HOST';
+
+  /// Supported languages
+  static const List<String> supportedLanguages = ['en', 'tr'];
+
+  /// Default language
+  static const String defaultLanguage = 'en';
+
+  /// Key for first launch
+  static const String keyIsFirstLaunch = 'isFirstLaunch';
 }

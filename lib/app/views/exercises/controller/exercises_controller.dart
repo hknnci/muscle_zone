@@ -5,24 +5,46 @@ import 'package:muscle_zone/app/services/api/exercise_service.dart';
 import 'package:muscle_zone/core/constants/app_keys.dart';
 import 'package:muscle_zone/core/widgets/progress/custom_flushbar.dart';
 
+/// Controller class that manages exercise-related operations and states
 class ExercisesController extends GetxController {
-  final ExerciseService _exerciseService;
-
+  /// Constructor for ExercisesController
+  /// _exerciseService is the service responsible for exercise-related API call
   ExercisesController(this._exerciseService);
 
-  var exercises = <BaseObjectModel>[].obs;
-  var filteredExercises = <BaseObjectModel>[].obs;
-  var equipmentList = <String>[].obs;
-  var currentPageIndex = 0.obs;
-  var selectedEquipment = ''.obs;
-  var isLoading = false.obs;
-  var isLoadingMore = false.obs;
-  var isFetchingMore = false.obs;
+  final ExerciseService _exerciseService;
+
+  /// List of all exercises
+  final RxList<BaseObjectModel> exercises = <BaseObjectModel>[].obs;
+
+  /// List of filtered exercises based on selected equipment
+  final RxList<BaseObjectModel> filteredExercises = <BaseObjectModel>[].obs;
+
+  /// List of available equipment types
+  final RxList<String> equipmentList = <String>[].obs;
+
+  /// Current page index in the PageView
+  final RxInt currentPageIndex = 0.obs;
+
+  /// Currently selected equipment filter
+  final RxString selectedEquipment = ''.obs;
+
+  /// Loading state indicator
+  final RxBool isLoading = false.obs;
+
+  /// Indicates if more exercises are currently being loaded
+  final RxBool isLoadingMore = false.obs;
+
+  /// Tracks the fetching state for additional exercises
+  RxBool isFetchingMore = false.obs;
+
+  /// Controls the page scrolling and navigation
   final PageController pageController = PageController();
 
-  // Pagination limit and offset
+  /// Maximum number of items to fetch per request
   final int limit = 10;
-  var offset = 0;
+
+  /// Current offset for pagination
+  int offset = 0;
 
   @override
   void onInit() {
@@ -43,7 +65,7 @@ class ExercisesController extends GetxController {
     }
   }
 
-  // Fetch exercises based on BodyPart and equipment filter
+  /// Fetch exercises based on BodyPart and equipment filter
   Future<void> fetchExercises({bool isLoadMore = false}) async {
     try {
       if (isLoadMore) {
@@ -56,7 +78,7 @@ class ExercisesController extends GetxController {
       }
 
       var newExercises = await _exerciseService.getExercisesByBodyPart(
-        Get.arguments,
+        Get.arguments as String,
         limit: limit,
         offset: offset,
       );
@@ -82,7 +104,7 @@ class ExercisesController extends GetxController {
         filteredExercises.assignAll(newExercises);
       }
     } catch (e) {
-      print("Error fetching exercises: $e");
+      print('Error fetching exercises: $e');
     } finally {
       if (isLoadMore) {
         isLoadingMore(false);
@@ -93,25 +115,27 @@ class ExercisesController extends GetxController {
     }
   }
 
-  // Load more exercises
-  void loadMoreExercises() async {
+  /// Loads additional exercises when scrolling reaches the end of the list
+  Future<void> loadMoreExercises() async {
     await fetchExercises(isLoadMore: true);
   }
 
-  // Fetch equipment list
+  /// Fetches the list of available equipment from the exercise service
   Future<void> fetchEquipmentList() async {
     try {
       isLoading(true);
-      equipmentList.value = await _exerciseService.getEquipmentList();
-      equipmentList.insert(0, "All");
+      equipmentList
+        ..value = await _exerciseService.getEquipmentList()
+        ..insert(0, 'All');
     } catch (e) {
-      print("Error fetching equipment list: $e");
+      print('Error fetching equipment list: $e');
     } finally {
       isLoading(false);
     }
   }
 
-  // Filter exercises based on selected equipment
+  /// Filters the exercise list based on the selected equipment type
+  /// [equipment] is the equipment type to filter by
   void filterExercisesByEquipment(String equipment) {
     isLoading(true);
 
@@ -135,8 +159,9 @@ class ExercisesController extends GetxController {
   ) {
     final equipmentLowerCase = selectedEquipment.value.toLowerCase();
     return exercisesList
-        .where((exercise) =>
-            exercise.equipment.toLowerCase() == equipmentLowerCase)
+        .where(
+          (exercise) => exercise.equipment.toLowerCase() == equipmentLowerCase,
+        )
         .toList();
   }
 
@@ -148,7 +173,9 @@ class ExercisesController extends GetxController {
     }
   }
 
-  // Update page index
+  /// Updates the current page index in the PageView
+  /// [index] is the new page index to set
+  // ignore: use_setters_to_change_properties
   void updatePageIndex(int index) {
     currentPageIndex.value = index;
   }

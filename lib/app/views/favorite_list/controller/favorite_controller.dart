@@ -6,20 +6,21 @@ import 'package:muscle_zone/core/constants/app_keys.dart';
 import 'package:muscle_zone/core/widgets/dialog/custom_dialog.dart';
 import 'package:muscle_zone/core/widgets/dialog/custom_input_dialog.dart';
 
-/// Controller for managing favorite lists.
-class FavoriteListController extends GetxController {
-  /// Constructs a [FavoriteListController] widget.
-  FavoriteListController(this._hiveService);
+/// Controller class for managing favorite exercise lists.
+class FavoriteController extends GetxController {
+  /// Constructs a [FavoriteController].
+  FavoriteController(this._hiveService);
 
+  /// The HiveService instance.
   final HiveService _hiveService;
 
   /// The list of favorite lists.
   final favoriteLists = <FavoriteList>[].obs;
 
-  /// Indicates whether a new list is currently being added.
+  /// Whether a new list is being added.
   final isAddingNewList = false.obs;
 
-  /// Text controller for the new list name input.
+  /// The controller for the new list name.
   final newListController = TextEditingController();
 
   @override
@@ -28,25 +29,22 @@ class FavoriteListController extends GetxController {
     loadFavoriteLists();
   }
 
-  /// Loads and updates the list of favorites from local storage.
+  /// Loads the favorite lists from the Hive database.
   void loadFavoriteLists() {
     favoriteLists.value = _hiveService.getFavoritesBox().values.toList();
   }
 
-  /// Checks if the given exercise is marked as favorite in any list.
-  /// Returns true if the [exerciseId] exists in any favorite list.
+  /// Checks if an exercise is in any favorite list.
   bool isExerciseFavorite(String exerciseId) {
     return _hiveService.isExerciseInAnyList(exerciseId);
   }
 
-  /// Sets the [isAddingNewList] flag to true to indicate
-  /// that a new list is being added.
+  /// Starts the process of adding a new favorite list.
   void startAddingNewList() {
     isAddingNewList.value = true;
   }
 
-  /// Creates and saves a new favorite list.
-  /// Saves the new list to local storage if the list name is not empty.
+  /// Saves a new favorite list.
   Future<void> saveNewList() async {
     if (newListController.text.isNotEmpty) {
       final newList = FavoriteList(
@@ -60,17 +58,14 @@ class FavoriteListController extends GetxController {
     }
   }
 
-  /// Adds an exercise to the specified favorite list.
-  /// [listName] the name of the list to add the exercise to.
-  /// [exerciseId] the unique identifier of the exercise to add.
+  /// Adds an exercise to a favorite list.
   Future<void> addExerciseToList(String listName, String exerciseId) async {
     await _hiveService.addExerciseToList(listName, exerciseId);
     Get.back<void>();
     update();
   }
 
-  /// Edits the name of the specified favorite list.
-  /// [list] the favorite list to edit.
+  /// Edits the name of a favorite list.
   Future<void> editListName(FavoriteList list) async {
     final result = await CustomInputDialog.show(
       title: AppKeys.editListName,
@@ -84,13 +79,12 @@ class FavoriteListController extends GetxController {
     }
   }
 
-  /// Deletes the specified favorite list.
-  /// Shows a confirmation dialog before deleting the list.
-  /// [list] the favorite list to delete.
+  /// Deletes a favorite list.
   Future<void> deleteList(FavoriteList list) async {
     final confirm = await CustomDialog.show(
       title: AppKeys.deleteList,
       content: AppKeys.sureDelete,
+      confirmText: AppKeys.delete,
       confirmColor: Colors.red,
     );
 
@@ -101,7 +95,6 @@ class FavoriteListController extends GetxController {
   }
 
   /// Removes an exercise from all favorite lists.
-  /// [exerciseId] the unique identifier of the exercise to remove.
   Future<void> removeExerciseFromAllLists(String exerciseId) async {
     for (final list in favoriteLists) {
       if (list.exerciseIds.contains(exerciseId)) {

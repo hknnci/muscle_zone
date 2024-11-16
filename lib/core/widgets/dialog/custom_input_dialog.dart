@@ -1,28 +1,41 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:muscle_zone/core/constants/app_keys.dart';
 
+/// A customizable text input dialog widget.
 class CustomInputDialog extends StatelessWidget {
-  final String title;
-  final String hintText;
-  final String initialValue;
-  final String cancelText;
-  final String confirmText;
-
+  /// Constructs a [CustomInputDialog] widget.
   const CustomInputDialog({
-    Key? key,
     required this.title,
     required this.hintText,
     required this.initialValue,
-    this.cancelText = 'İptal',
-    this.confirmText = 'Kaydet',
-  }) : super(key: key);
+    super.key,
+    this.cancelText = AppKeys.cancel,
+    this.confirmText = AppKeys.confirm,
+  });
 
+  /// The title text of the dialog
+  final String title;
+
+  /// The hint text of the dialog
+  final String hintText;
+
+  /// The initial value of the dialog
+  final String initialValue;
+
+  /// The text of the cancel button
+  final String cancelText;
+
+  /// The text of the confirm button
+  final String confirmText;
+
+  /// Shows the dialog and returns a string result.
   static Future<String?> show({
     required String title,
     required String hintText,
     required String initialValue,
-    String cancelText = 'İptal',
-    String confirmText = 'Kaydet',
+    String cancelText = AppKeys.cancel,
+    String confirmText = AppKeys.confirm,
   }) {
     final controller = TextEditingController(text: initialValue);
 
@@ -36,7 +49,7 @@ class CustomInputDialog extends StatelessWidget {
         ),
         actions: [
           TextButton(
-            onPressed: () => Get.back(),
+            onPressed: Get.back<String>,
             child: Text(cancelText),
           ),
           TextButton(
@@ -45,7 +58,7 @@ class CustomInputDialog extends StatelessWidget {
           ),
         ],
       ),
-    ).whenComplete(() => controller.dispose());
+    ).whenComplete(controller.dispose);
   }
 
   @override
@@ -60,7 +73,7 @@ class CustomInputDialog extends StatelessWidget {
       ),
       actions: [
         TextButton(
-          onPressed: () => Get.back(),
+          onPressed: Get.back<String>,
           child: Text(cancelText),
         ),
         TextButton(

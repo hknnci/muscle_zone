@@ -1,16 +1,19 @@
+// ignore_for_file: cascade_invocations
+
 import 'package:get/get.dart';
+import 'package:muscle_zone/app/services/api/exercise_service.dart';
+import 'package:muscle_zone/app/services/local/hive_service.dart';
+import 'package:muscle_zone/app/services/local/shared_pref_service.dart';
 import 'package:muscle_zone/app/views/exercises/controller/exercises_controller.dart';
+import 'package:muscle_zone/app/views/favorite_exercises/controller/favorite_exercises_controller.dart';
+import 'package:muscle_zone/app/views/favorite_list/controller/favorite_list_controller.dart';
 import 'package:muscle_zone/app/views/home/controller/home_controller.dart';
 import 'package:muscle_zone/app/views/onboarding/controller/onboarding_controller.dart';
 import 'package:muscle_zone/app/views/splash/controller/splash_controller.dart';
-import 'package:muscle_zone/app/services/api/exercise_service.dart';
 import 'package:muscle_zone/config/app_service.dart';
-import 'package:muscle_zone/app/services/local/shared_pref_service.dart';
 import 'package:muscle_zone/core/utils/api_client.dart';
-import 'package:muscle_zone/app/services/local/hive_service.dart';
-import 'package:muscle_zone/app/views/favorite_list/controller/favorite_list_controller.dart';
-import 'package:muscle_zone/app/views/favorite_exercises/controller/favorite_exercises_controller.dart';
 
+/// Binding class that registers all dependencies at app startup.
 class AppBinding implements Bindings {
   @override
   void dependencies() {

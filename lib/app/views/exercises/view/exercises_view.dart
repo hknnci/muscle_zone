@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:muscle_zone/app/views/exercises/controller/exercises_controller.dart';
+import 'package:muscle_zone/app/views/exercises/widgets/exercises_body.dart';
+import 'package:muscle_zone/app/views/exercises/widgets/favorite_button.dart';
+import 'package:muscle_zone/app/views/exercises/widgets/filter_bottomsheet.dart';
 import 'package:muscle_zone/core/constants/app_keys.dart';
 import 'package:muscle_zone/core/extensions/string_extensions.dart';
 import 'package:muscle_zone/core/widgets/background/gradient_background.dart';
-import 'package:muscle_zone/app/views/exercises/widgets/filter_bottomsheet.dart';
-import 'package:muscle_zone/app/views/exercises/widgets/exercises_body.dart';
 import 'package:muscle_zone/core/widgets/texts/gradient_text.dart';
-import 'package:muscle_zone/app/views/exercises/widgets/favorite_button.dart';
 
+/// A view widget that displays exercises for a specific body part.
 class ExercisesView extends GetView<ExercisesController> {
-  final String bodyPart;
+  /// Constructs an [ExercisesView] widget.
+  const ExercisesView({required this.bodyPart, super.key});
 
-  const ExercisesView({Key? key, required this.bodyPart}) : super(key: key);
+  /// The body part for which exercises will be displayed.
+  final String bodyPart;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +26,7 @@ class ExercisesView extends GetView<ExercisesController> {
         appBar: AppBar(
           centerTitle: true,
           title: GradientText(
-            "${AppKeys.exercisesTitle} ${bodyPart.toTitleCase()}",
+            '${AppKeys.exercisesTitle} ${bodyPart.toTitleCase()}',
             isAppBar: true,
           ),
           actions: [
@@ -34,13 +37,13 @@ class ExercisesView extends GetView<ExercisesController> {
             ),
           ],
         ),
-        body: ExercisesBody(),
+        body: const ExercisesBody(),
       ),
     );
   }
 
   void _showEquipmentFilterBottomSheet(BuildContext context) {
-    showModalBottomSheet(
+    showModalBottomSheet<void>(
       context: context,
       builder: (context) => EquipmentFilterBottomSheet(controller: controller),
     );

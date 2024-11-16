@@ -2,17 +2,10 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'base_object_model.g.dart';
 
+/// Base model representing an exercise object.
 @JsonSerializable()
 class BaseObjectModel {
-  final String id;
-  final String name;
-  final String bodyPart;
-  final String equipment;
-  final String gifUrl;
-  final String target;
-  final List<String> secondaryMuscles;
-  final List<String> instructions;
-
+  /// Constructor for BaseObjectModel
   const BaseObjectModel({
     required this.id,
     required this.name,
@@ -24,6 +17,31 @@ class BaseObjectModel {
     required this.instructions,
   });
 
+  /// Creates a [BaseObjectModel] instance from a JSON map
   factory BaseObjectModel.fromJson(Map<String, dynamic> json) =>
       _$BaseObjectModelFromJson(json);
+
+  /// Unique identifier of the object
+  final String id;
+
+  /// Name of the exercise
+  final String name;
+
+  /// Body part targeted by the exercise
+  final String bodyPart;
+
+  /// Equipment required for the exercise
+  final String equipment;
+
+  /// URL of the exercise demonstration gif
+  final String gifUrl;
+
+  /// Primary muscle targeted by the exercise
+  final String target;
+
+  /// List of secondary muscles worked during the exercise
+  final List<String> secondaryMuscles;
+
+  /// Step-by-step instructions for performing the exercise
+  final List<String> instructions;
 }

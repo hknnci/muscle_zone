@@ -2,15 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:muscle_zone/core/widgets/texts/custom_text.dart';
 
+/// A custom card widget for displaying exercise information.
+/// [bodyPart] displays the name of the body part.
+/// [onTap] specifies the function to be called when the card is tapped.
 class CustomCard extends StatelessWidget {
-  final String bodyPart;
-  final Function() onTap;
-
+  /// Constructs a [CustomCard] widget.
   const CustomCard({
-    Key? key,
     required this.bodyPart,
     required this.onTap,
-  }) : super(key: key);
+    super.key,
+  });
+
+  /// The name of the body part to be displayed.
+  final String bodyPart;
+
+  /// Callback function to be executed when the card is tapped.
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {

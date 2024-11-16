@@ -1,16 +1,25 @@
 import 'package:flutter/material.dart';
 
+/// A widget that creates a gradient background.
+/// Can be customized with specific colors or use preset color schemes
+/// for home screen and onboarding screens.
 class GradientBackground extends StatelessWidget {
-  final Widget? child;
-  final List<Color>? colors;
-  final bool isHomeScreen;
-
+  /// Constructs a [GradientBackground] widget.
   const GradientBackground({
-    Key? key,
+    super.key,
     this.child,
     this.colors,
     this.isHomeScreen = false,
-  }) : super(key: key);
+  });
+
+  /// Child widget to be displayed on top of the gradient background.
+  final Widget? child;
+
+  /// Custom colors for the gradient. If null, preset colors will be used.
+  final List<Color>? colors;
+
+  /// Determines whether to use home screen or onboarding color scheme.
+  final bool isHomeScreen;
 
   @override
   Widget build(BuildContext context) {

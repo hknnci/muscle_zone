@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
 
+/// A page indicator widget.
+/// Displays an animated container that visually shows active or inactive state.
 class PageIndicator extends StatelessWidget {
-  final bool isActive;
+  /// Constructs a [PageIndicator] widget.
+  const PageIndicator({
+    required this.isActive,
+    super.key,
+  });
 
-  const PageIndicator({Key? key, required this.isActive}) : super(key: key);
+  /// Whether the indicator is active
+  final bool isActive;
 
   @override
   Widget build(BuildContext context) {

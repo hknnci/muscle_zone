@@ -5,18 +5,20 @@ import 'package:muscle_zone/app/views/favorite_exercises/controller/favorite_exe
 import 'package:muscle_zone/app/views/favorite_exercises/widgets/favorite_exercise_body.dart';
 import 'package:muscle_zone/core/widgets/texts/gradient_text.dart';
 
+/// View widget that displays the favorite exercise list
 class FavoriteExercisesView extends GetView<FavoriteExercisesController> {
-  const FavoriteExercisesView({Key? key, required FavoriteList favoriteList})
-      : super(key: key);
+  /// Constructor for FavoriteExercisesView
+  const FavoriteExercisesView({required this.favoriteList, super.key});
+
+  /// The favorite list to be displayed
+  final FavoriteList favoriteList;
 
   @override
   Widget build(BuildContext context) {
-    final FavoriteList list = Get.arguments;
-
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: GradientText(list.name, isAppBar: true),
+        title: GradientText(favoriteList.name, isAppBar: true),
       ),
       body: const FavoriteExercisesBody(),
     );

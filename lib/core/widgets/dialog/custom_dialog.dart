@@ -1,27 +1,41 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:muscle_zone/core/constants/app_keys.dart';
 
+/// A customizable dialog widget.
+/// Allows customization of title, content and button texts.
 class CustomDialog extends StatelessWidget {
-  final String title;
-  final String content;
-  final String cancelText;
-  final String confirmText;
-  final Color? confirmColor;
-
+  /// Constructs a [CustomDialog] widget.
   const CustomDialog({
-    Key? key,
     required this.title,
     required this.content,
-    this.cancelText = 'İptal',
-    this.confirmText = 'Tamam',
+    this.cancelText = AppKeys.cancel,
+    this.confirmText = AppKeys.confirm,
     this.confirmColor,
-  }) : super(key: key);
+    super.key,
+  });
 
+  /// The title text of the dialog
+  final String title;
+
+  /// The content text of the dialog
+  final String content;
+
+  /// The text of the cancel button
+  final String cancelText;
+
+  /// The text of the confirm button
+  final String confirmText;
+
+  /// The color of the confirm button
+  final Color? confirmColor;
+
+  /// Shows the dialog and returns a boolean result.
   static Future<bool?> show({
     required String title,
     required String content,
-    String cancelText = 'İptal',
-    String confirmText = 'Tamam',
+    String cancelText = AppKeys.cancel,
+    String confirmText = AppKeys.confirm,
     Color? confirmColor,
   }) {
     return Get.dialog<bool>(

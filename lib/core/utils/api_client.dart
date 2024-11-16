@@ -1,22 +1,28 @@
 import 'dart:convert';
-import 'package:http/http.dart' as http;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:http/http.dart' as http;
 import 'package:muscle_zone/config/app_config.dart';
 import 'package:muscle_zone/core/constants/db_constants.dart';
 import 'package:muscle_zone/core/errors/api_exception.dart';
 import 'package:muscle_zone/core/errors/error_handler.dart';
 import 'package:muscle_zone/core/utils/json_converter.dart';
 
+/// Client class used for managing API requests.
+/// Configured with [baseUrl] and [defaultHeaders].
 class ApiClient {
-  final String baseUrl;
-  final Map<String, String> defaultHeaders;
-
+  /// Constructs an [ApiClient] with the given base URL and default headers.
   ApiClient()
-      : baseUrl = dotenv.env[AppConfig.apiHost] ?? "",
+      : baseUrl = dotenv.env[AppConfig.apiHost] ?? '',
         defaultHeaders = {
-          AppConfig.rapidApiKey: dotenv.env[AppConfig.apiKey] ?? "",
-          AppConfig.rapidApiHost: dotenv.env[AppConfig.apiHost] ?? "",
+          AppConfig.rapidApiKey: dotenv.env[AppConfig.apiKey] ?? '',
+          AppConfig.rapidApiHost: dotenv.env[AppConfig.apiHost] ?? '',
         };
+
+  /// The base URL for API requests
+  final String baseUrl;
+
+  /// The default headers for API requests
+  final Map<String, String> defaultHeaders;
 
   /// GET method for list
   Future<List<T>> getList<T>({
@@ -26,7 +32,7 @@ class ApiClient {
     // Combining paths
     final uri = Uri.https(
       baseUrl,
-      "${DBConstants.path_exercises}$path",
+      '${DBConstants.path_exercises}$path',
       queryParameters,
     );
 
@@ -44,7 +50,7 @@ class ApiClient {
       // print('Response Body: ${response.body}');
 
       if (response.statusCode == 200) {
-        final List<dynamic> data = jsonDecode(response.body);
+        final data = jsonDecode(response.body) as List<dynamic>;
 
         // Automatically handle fromJson conversion
         if (T == String) {
@@ -68,7 +74,7 @@ class ApiClient {
   }) async {
     final uri = Uri.https(
       baseUrl,
-      "${DBConstants.path_exercises}$path",
+      '${DBConstants.path_exercises}$path',
       queryParameters,
     );
 
@@ -86,7 +92,7 @@ class ApiClient {
       // print('Response Body: ${response.body}');
 
       if (response.statusCode == 200) {
-        final Map<String, dynamic> data = jsonDecode(response.body);
+        final data = jsonDecode(response.body) as Map<String, dynamic>;
 
         // Automatically handle fromJson conversion
         return JsonConverter.fromJson<T>(data);

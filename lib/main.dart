@@ -1,3 +1,5 @@
+// ignore_for_file: public_member_api_docs
+
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
@@ -12,13 +14,13 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
       title: 'MuscleZone',
-      theme: MaterialTheme(const TextTheme()).light(),
+      theme: const MaterialTheme(TextTheme()).light(),
       initialBinding: AppBinding(),
       defaultTransition: Transition.fade,
       getPages: AppRoutes.pages,

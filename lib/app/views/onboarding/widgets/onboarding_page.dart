@@ -4,10 +4,13 @@ import 'package:muscle_zone/app/models/local/onboard/onboarding_page_model.dart'
 import 'package:muscle_zone/core/widgets/texts/custom_text.dart';
 import 'package:muscle_zone/core/widgets/texts/gradient_text.dart';
 
+/// A widget that displays a single onboarding page.
 class OnboardingPage extends StatelessWidget {
-  final OnboardingPageModel page;
+  /// Constructs an [OnboardingPage] widget.
+  const OnboardingPage({required this.page, super.key});
 
-  const OnboardingPage({Key? key, required this.page}) : super(key: key);
+  /// The onboarding page model containing the content to be displayed.
+  final OnboardingPageModel page;
 
   @override
   Widget build(BuildContext context) {
@@ -22,10 +25,7 @@ class OnboardingPage extends StatelessWidget {
         const SizedBox(height: 20),
         GradientText(page.title),
         const SizedBox(height: 10),
-        CustomText.bodyLarge(
-          page.description,
-          textAlign: TextAlign.center,
-        ),
+        CustomText.bodyLarge(page.description),
       ],
     );
   }
