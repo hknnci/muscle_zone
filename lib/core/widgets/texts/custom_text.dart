@@ -130,13 +130,19 @@ class CustomText {
     String text, {
     TextAlign textAlign = TextAlign.center,
     Color? color,
+    FontWeight? fontWeight,
+    int? maxLines,
+    TextOverflow? overflow,
   }) {
     return Text(
       text,
       textAlign: textAlign,
       style: Get.textTheme.titleMedium?.copyWith(
         color: color ?? Get.theme.colorScheme.onSurface,
+        fontWeight: fontWeight ?? FontWeight.normal,
       ),
+      maxLines: maxLines ?? 1,
+      overflow: overflow ?? TextOverflow.ellipsis,
     );
   }
 
@@ -190,6 +196,8 @@ class CustomText {
     String text, {
     TextAlign textAlign = TextAlign.center,
     Color? color,
+    int? maxLines,
+    TextOverflow? overflow,
   }) {
     return Text(
       text,
@@ -197,6 +205,8 @@ class CustomText {
       style: Get.textTheme.bodySmall?.copyWith(
         color: color ?? Get.theme.colorScheme.onSurface,
       ),
+      maxLines: maxLines ?? 1,
+      overflow: overflow ?? TextOverflow.ellipsis,
     );
   }
 }

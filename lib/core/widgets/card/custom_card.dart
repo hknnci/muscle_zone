@@ -10,6 +10,7 @@ class CustomCard extends StatelessWidget {
   const CustomCard({
     required this.bodyPart,
     required this.onTap,
+    this.child,
     super.key,
   });
 
@@ -18,6 +19,9 @@ class CustomCard extends StatelessWidget {
 
   /// Callback function to be executed when the card is tapped.
   final VoidCallback onTap;
+
+  /// Optional child widget to be displayed inside the card.
+  final Widget? child;
 
   @override
   Widget build(BuildContext context) {
@@ -28,13 +32,17 @@ class CustomCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
         ),
         elevation: 4,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Icon(Icons.fitness_center, size: 40),
-            const SizedBox(height: 10),
-            CustomText.titleMedium(bodyPart.capitalizeFirst!),
-          ],
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: child ??
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(Icons.fitness_center, size: 40),
+                  const SizedBox(height: 10),
+                  CustomText.titleMedium(bodyPart.capitalizeFirst!),
+                ],
+              ),
         ),
       ),
     );

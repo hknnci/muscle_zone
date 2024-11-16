@@ -33,32 +33,33 @@ class CustomInputDialog extends StatelessWidget {
   static Future<String?> show({
     required String title,
     required String hintText,
-    required String initialValue,
-    String cancelText = AppKeys.cancel,
-    String confirmText = AppKeys.confirm,
-  }) {
+    String? initialValue,
+  }) async {
     final controller = TextEditingController(text: initialValue);
 
-    return Get.dialog<String>(
-      AlertDialog(
-        title: Text(title),
-        content: TextField(
-          controller: controller,
-          decoration: InputDecoration(hintText: hintText),
-          autofocus: true,
+    try {
+      return await Get.dialog<String>(
+        AlertDialog(
+          title: Text(title),
+          content: TextField(
+            controller: controller,
+            decoration: InputDecoration(hintText: hintText),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Get.back<String>(),
+              child: const Text(AppKeys.cancel),
+            ),
+            TextButton(
+              onPressed: () => Get.back(result: controller.text),
+              child: const Text(AppKeys.confirm),
+            ),
+          ],
         ),
-        actions: [
-          TextButton(
-            onPressed: Get.back<String>,
-            child: Text(cancelText),
-          ),
-          TextButton(
-            onPressed: () => Get.back(result: controller.text),
-            child: Text(confirmText),
-          ),
-        ],
-      ),
-    ).whenComplete(controller.dispose);
+      );
+    } finally {
+      controller.dispose();
+    }
   }
 
   @override

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:muscle_zone/app/views/favorite_list/controller/favorite_list_controller.dart';
 import 'package:muscle_zone/core/constants/app_keys.dart';
+import 'package:muscle_zone/core/widgets/texts/custom_text.dart';
 
 /// A bottom sheet widget that displays and manages favorite exercise lists.
 class FavoriteListsBottomSheet extends GetView<FavoriteListController> {
@@ -21,10 +22,7 @@ class FavoriteListsBottomSheet extends GetView<FavoriteListController> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text(
-            'Favori Listeler',
-            style: Theme.of(context).textTheme.titleLarge,
-          ),
+          CustomText.titleLarge(AppKeys.favoriteLists),
           const SizedBox(height: 16),
           Obx(
             () => ListView.builder(
@@ -32,10 +30,28 @@ class FavoriteListsBottomSheet extends GetView<FavoriteListController> {
               itemCount: controller.favoriteLists.length,
               itemBuilder: (context, index) {
                 final list = controller.favoriteLists[index];
-                return ListTile(
-                  title: Text(list.name),
-                  onTap: () =>
-                      controller.addExerciseToList(list.name, exerciseId),
+                return Padding(
+                  padding: const EdgeInsets.only(bottom: 8),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.blue.withAlpha(100),
+                      ),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: ListTile(
+                      onTap: () => controller.addExerciseToList(
+                        list.name,
+                        exerciseId,
+                      ),
+                      contentPadding:
+                          const EdgeInsets.symmetric(horizontal: 12),
+                      title: CustomText.titleMedium(
+                        list.name,
+                        textAlign: TextAlign.start,
+                      ),
+                    ),
+                  ),
                 );
               },
             ),
@@ -61,7 +77,10 @@ class FavoriteListsBottomSheet extends GetView<FavoriteListController> {
                   )
                 : ElevatedButton(
                     onPressed: () => controller.startAddingNewList(),
-                    child: const Text('Yeni Liste Oluştur'),
+                    child: CustomText.bodyMedium(
+                      AppKeys.createNewList,
+                      color: Colors.white,
+                    ),
                   ),
           ),
         ],

@@ -4,11 +4,14 @@ class AppKeys {
   static const String sureDelete = 'Are you sure you want to delete this list';
   static const String cancel = 'Cancel';
   static const String confirm = 'Confirm';
+  static const String chooseEquipment = 'Choose Equipment';
+  static const String createNewList = 'Create New List';
   static const String delete = 'Delete';
   static const String deleteList = 'Delete List';
   static const String endOfTheList = "You've reached the end of the list";
   static const String error = 'Error';
   static const String editListName = 'Edit List Name';
+  static const String exercise = 'Exercise';
   static const String exercisesTitle = 'Exercises for';
   static const String exerciseRemoved = 'Exercises removed from Favorites';
   static const String equipment = 'Equipment:';

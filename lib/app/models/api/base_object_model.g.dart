@@ -21,15 +21,3 @@ BaseObjectModel _$BaseObjectModelFromJson(Map<String, dynamic> json) =>
           .map((e) => e as String)
           .toList(),
     );
-
-Map<String, dynamic> _$BaseObjectModelToJson(BaseObjectModel instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'name': instance.name,
-      'bodyPart': instance.bodyPart,
-      'equipment': instance.equipment,
-      'gifUrl': instance.gifUrl,
-      'target': instance.target,
-      'secondaryMuscles': instance.secondaryMuscles,
-      'instructions': instance.instructions,
-    };

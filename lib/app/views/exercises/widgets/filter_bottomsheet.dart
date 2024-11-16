@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:muscle_zone/app/views/exercises/controller/exercises_controller.dart';
+import 'package:muscle_zone/core/constants/app_keys.dart';
 import 'package:muscle_zone/core/extensions/string_extensions.dart';
+import 'package:muscle_zone/core/widgets/texts/custom_text.dart';
 
 /// A bottom sheet widget that filters exercises by equipment.
 class EquipmentFilterBottomSheet extends StatelessWidget {
@@ -20,19 +22,42 @@ class EquipmentFilterBottomSheet extends StatelessWidget {
       if (controller.equipmentList.isEmpty) {
         return const Center(child: CircularProgressIndicator());
       }
-      return ListView.builder(
-        shrinkWrap: true,
-        itemCount: controller.equipmentList.length,
-        itemBuilder: (context, index) {
-          final equipment = controller.equipmentList[index];
-          return ListTile(
-            title: Text(equipment.toTitleCase()),
-            onTap: () {
-              controller.filterExercisesByEquipment(equipment);
-              Get.back<void>();
-            },
-          );
-        },
+      return Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(16),
+            child: CustomText.titleLarge(AppKeys.chooseEquipment),
+          ),
+          Flexible(
+            child: ListView.builder(
+              shrinkWrap: true,
+              itemCount: controller.equipmentList.length,
+              itemBuilder: (context, index) {
+                final equipment = controller.equipmentList[index];
+                return Container(
+                  margin: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 4,
+                  ),
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Colors.blue.withAlpha(77),
+                    ),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: ListTile(
+                    title: Text(equipment.toTitleCase()),
+                    onTap: () {
+                      controller.filterExercisesByEquipment(equipment);
+                      Get.back<void>();
+                    },
+                  ),
+                );
+              },
+            ),
+          ),
+        ],
       );
     });
   }
