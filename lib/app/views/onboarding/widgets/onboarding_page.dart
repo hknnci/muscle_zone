@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:muscle_zone/app/models/onboarding_page_model.dart';
+import 'package:muscle_zone/app/models/local/onboard/onboarding_page_model.dart';
 import 'package:muscle_zone/core/widgets/texts/custom_text.dart';
 import 'package:muscle_zone/core/widgets/texts/gradient_text.dart';
 

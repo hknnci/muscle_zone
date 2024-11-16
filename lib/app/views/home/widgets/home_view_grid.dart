@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:muscle_zone/core/widgets/card/custom_card.dart';
 
-class CustomGrid extends StatelessWidget {
+class HomeViewGrid extends StatelessWidget {
   final List<String> bodyParts;
   final Function(String) onBodyPartSelected;
 
-  const CustomGrid({
+  const HomeViewGrid({
     Key? key,
     required this.bodyParts,
     required this.onBodyPartSelected,

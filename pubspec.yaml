@@ -20,6 +20,7 @@ dependencies:
   # Utils
   flutter_dotenv: ^5.2.1
   shared_preferences: ^2.3.3
+  hive_flutter: ^1.1.0
 
   # UI components
   flutter_svg: ^2.0.14
@@ -32,6 +33,7 @@ dev_dependencies:
   # JSON serialization
   build_runner: ^2.4.13
   json_serializable: ^6.8.0
+  hive_generator: ^2.0.1
 
 flutter:
   uses-material-design: true

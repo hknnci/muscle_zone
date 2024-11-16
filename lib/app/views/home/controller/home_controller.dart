@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:muscle_zone/app/models/api/base_object_model.dart';
-import 'package:muscle_zone/app/services/exercise_service.dart';
+import 'package:muscle_zone/app/services/api/exercise_service.dart';
 import 'package:muscle_zone/core/constants/constants.dart';
 import 'package:muscle_zone/core/constants/app_keys.dart';
 import 'package:muscle_zone/core/utils/service_helper.dart';

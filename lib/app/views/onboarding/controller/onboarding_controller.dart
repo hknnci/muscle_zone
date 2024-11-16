@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import 'package:muscle_zone/app/models/onboarding_page_model.dart';
+import 'package:muscle_zone/app/models/local/onboard/onboarding_page_model.dart';
 import 'package:muscle_zone/app/services/local/shared_pref_service.dart';
 import 'package:muscle_zone/core/constants/routes.dart';
 import 'package:muscle_zone/core/constants/app_keys.dart';

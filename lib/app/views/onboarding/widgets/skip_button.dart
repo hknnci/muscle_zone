@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:muscle_zone/core/constants/app_keys.dart';
 import 'package:muscle_zone/core/widgets/texts/custom_text.dart';
 
-//Used in OnboardingView
 class SkipButton extends StatelessWidget {
   final VoidCallback onPressed;
   final bool isVisible;

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:muscle_zone/core/widgets/texts/custom_text.dart';
 
-class GradientElevatedButton extends StatelessWidget {
+class OnboardingElevatedButton extends StatelessWidget {
   final VoidCallback onPressed;
   final String text;
 
-  const GradientElevatedButton({
+  const OnboardingElevatedButton({
     Key? key,
     required this.onPressed,
     required this.text,

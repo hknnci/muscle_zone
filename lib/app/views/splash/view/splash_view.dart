@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:muscle_zone/app/views/splash/controller/splash_controller.dart';
 import 'package:muscle_zone/core/constants/constants.dart';
 import 'package:muscle_zone/core/widgets/background/gradient_background.dart';
-import 'package:muscle_zone/core/widgets/progress/progress_bar.dart';
+import 'package:muscle_zone/app/views/splash/widgets/progress_bar.dart';
 import 'package:muscle_zone/core/widgets/image/image_widget.dart';
 
 class SplashView extends GetView<SplashController> {

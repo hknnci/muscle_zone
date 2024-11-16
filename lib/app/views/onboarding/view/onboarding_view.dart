@@ -4,9 +4,9 @@ import 'package:muscle_zone/app/views/onboarding/controller/onboarding_controlle
 import 'package:muscle_zone/core/constants/app_keys.dart';
 import 'package:muscle_zone/core/widgets/background/gradient_background.dart';
 import 'package:muscle_zone/core/widgets/progress/page_indicator.dart';
-import 'package:muscle_zone/core/widgets/buttons/gradient_elevated_button.dart';
-import 'package:muscle_zone/core/widgets/buttons/skip_button.dart';
-import 'package:muscle_zone/core/widgets/page/onboarding_page.dart';
+import 'package:muscle_zone/app/views/onboarding/widgets/onboarding_elevated_button.dart';
+import 'package:muscle_zone/app/views/onboarding/widgets/skip_button.dart';
+import 'package:muscle_zone/app/views/onboarding/widgets/onboarding_page.dart';
 
 class OnboardingView extends GetView<OnboardingController> {
   const OnboardingView({Key? key}) : super(key: key);
@@ -57,7 +57,7 @@ class OnboardingView extends GetView<OnboardingController> {
                   Padding(
                     padding: const EdgeInsets.all(20),
                     child: Obx(
-                      () => GradientElevatedButton(
+                      () => OnboardingElevatedButton(
                         onPressed: controller.onNextButtonPressed,
                         text: controller.isLastPage
                             ? AppKeys.getStarted
