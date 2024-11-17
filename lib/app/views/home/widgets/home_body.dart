@@ -22,7 +22,7 @@ class HomeBody extends StatelessWidget {
       children: [
         Padding(
           padding: const EdgeInsets.all(16),
-          child: CustomText.titleLarge(AppKeys.selectBodyPart),
+          child: CustomText.titleMedium(AppKeys.selectBodyPart),
         ),
         Obx(() {
           if (controller.bodyParts.isEmpty) {
@@ -35,8 +35,9 @@ class HomeBody extends StatelessWidget {
 
           return Expanded(
             child: CustomGridView<String>(
-              items: controller.bodyParts,
+              childAspectRatio: 0.75,
               crossAxisCount: 3,
+              items: controller.bodyParts,
               itemBuilder: (context, bodyPart) => CustomCard(
                 bodyPart: bodyPart,
                 onTap: () => Get.toNamed<dynamic>(

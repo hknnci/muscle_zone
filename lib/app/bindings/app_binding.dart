@@ -28,12 +28,13 @@ class AppBinding implements Bindings {
 
     // Controllers
     Get.put(SplashController(Get.find<AppService>()));
-    Get.lazyPut(
-      () => OnboardingController(Get.find<SharedPrefService>()),
-    );
+    Get.lazyPut(() => OnboardingController(Get.find<SharedPrefService>()));
     Get.lazyPut(() => HomeController(Get.find<ExerciseService>()));
     Get.lazyPut(
-      () => ExercisesController(Get.find<ExerciseService>()),
+      () => ExercisesController(
+        Get.find<ExerciseService>(),
+        bodyPart: Get.arguments as String? ?? '',
+      ),
       fenix: true,
     );
     Get.lazyPut(

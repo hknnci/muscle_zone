@@ -27,7 +27,7 @@ class FavoriteExercisesBody extends GetView<FavoriteExercisesController> {
 
       return CustomGridView<BaseObjectModel>(
         items: controller.exercises,
-        childAspectRatio: 0.67,
+        childAspectRatio: 0.62,
         itemBuilder: (context, exercise) => Card(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

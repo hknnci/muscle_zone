@@ -25,7 +25,6 @@ class AppKeys {
   static String get getStarted => 'getStarted'.tr();
   static String get info => 'info'.tr();
   static String get listName => 'listName'.tr();
-  static String get muscleZone => 'muscleZone'.tr();
   static String get next => 'next'.tr();
   static String get newListName => 'newListName'.tr();
   static String get noExercise => 'noExercise'.tr();

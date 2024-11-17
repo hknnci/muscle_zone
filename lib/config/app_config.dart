@@ -4,6 +4,9 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 /// Application configuration constants
 class AppConfig {
+  /// Application name
+  static const String appName = 'MuscleZone';
+
   /// RapidAPI key header
   static const String rapidApiKey = 'X-RapidAPI-Key';
 

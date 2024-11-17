@@ -26,7 +26,7 @@ class GradientText extends StatelessWidget {
       blendMode: BlendMode.srcIn,
       shaderCallback: (bounds) => textGradient.createShader(bounds),
       child: isAppBar
-          ? CustomText.headlineSmall(text)
+          ? CustomText.titleLarge(text)
           : CustomText.headlineLarge(text),
     );
   }

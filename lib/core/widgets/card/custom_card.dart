@@ -28,9 +28,7 @@ class CustomCard extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Card(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         elevation: 4,
         child: Padding(
           padding: const EdgeInsets.all(16),
@@ -39,8 +37,8 @@ class CustomCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Icon(Icons.fitness_center, size: 40),
-                  const SizedBox(height: 10),
-                  CustomText.titleMedium(bodyPart.capitalizeFirst!),
+                  const SizedBox(height: 20),
+                  CustomText.bodyMedium(bodyPart.capitalizeFirst!),
                 ],
               ),
         ),
