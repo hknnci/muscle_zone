@@ -1,16 +1,23 @@
 // ignore_for_file: public_member_api_docs
-
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'package:muscle_zone/app/bindings/app_binding.dart';
+import 'package:muscle_zone/config/app_config.dart';
 import 'package:muscle_zone/config/app_routes.dart';
 import 'package:muscle_zone/core/themes/theme.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await dotenv.load();
-  runApp(const MyApp());
+  await AppConfig.init();
+
+  runApp(
+    EasyLocalization(
+      supportedLocales: AppConfig.supportedLocales,
+      path: AppConfig.translationsPath,
+      fallbackLocale: AppConfig.fallbackLocale,
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -24,6 +31,9 @@ class MyApp extends StatelessWidget {
       initialBinding: AppBinding(),
       defaultTransition: Transition.fade,
       getPages: AppRoutes.pages,
+      localizationsDelegates: context.localizationDelegates,
+      supportedLocales: context.supportedLocales,
+      locale: context.locale,
     );
   }
 }

@@ -30,7 +30,7 @@ class FavoriteListBody extends StatelessWidget {
                 Expanded(
                   child: TextField(
                     controller: controller.newListController,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       hintText: AppKeys.listName,
                     ),
                   ),

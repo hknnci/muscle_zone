@@ -1,3 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
 /// Application configuration constants
 class AppConfig {
   /// RapidAPI key header
@@ -12,12 +16,28 @@ class AppConfig {
   /// API host
   static const String apiHost = 'API_HOST';
 
-  /// Supported languages
-  static const List<String> supportedLanguages = ['en', 'tr'];
-
   /// Default language
   static const String defaultLanguage = 'en';
 
   /// Key for first launch
   static const String keyIsFirstLaunch = 'isFirstLaunch';
+
+  /// Initialize app configurations
+  static Future<void> init() async {
+    WidgetsFlutterBinding.ensureInitialized();
+    await EasyLocalization.ensureInitialized();
+    await dotenv.load();
+  }
+
+  /// Get supported locales
+  static List<Locale> get supportedLocales => const [
+        Locale('en'),
+        Locale('tr'),
+      ];
+
+  /// Get translations path
+  static const String translationsPath = 'assets/translations';
+
+  /// Get fallback locale
+  static const Locale fallbackLocale = Locale('en');
 }

@@ -19,7 +19,7 @@ class HomeView extends GetView<HomeController> {
         backgroundColor: Colors.transparent,
         appBar: AppBar(
           centerTitle: true,
-          title: const GradientText(AppKeys.muscleZone, isAppBar: true),
+          title: GradientText(AppKeys.muscleZone, isAppBar: true),
         ),
         body: HomeBody(controller: controller),
       ),

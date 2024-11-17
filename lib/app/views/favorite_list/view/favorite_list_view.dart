@@ -19,7 +19,7 @@ class FavoriteListView extends GetView<FavoriteListController> {
         backgroundColor: Colors.transparent,
         appBar: AppBar(
           centerTitle: true,
-          title: const GradientText(AppKeys.favoriteLists, isAppBar: true),
+          title: GradientText(AppKeys.favoriteLists, isAppBar: true),
           actions: [
             IconButton(
               icon: const Icon(Icons.add),

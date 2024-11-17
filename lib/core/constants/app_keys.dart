@@ -1,48 +1,45 @@
 // ignore_for_file: public_member_api_docs, lines_longer_than_80_chars
+import 'package:easy_localization/easy_localization.dart';
+
 /// Contains all the static string constants used in the application
 class AppKeys {
-  static const String sureDelete = 'Are you sure you want to delete this list';
-  static const String cancel = 'Cancel';
-  static const String confirm = 'Confirm';
-  static const String chooseEquipment = 'Choose Equipment';
-  static const String createNewList = 'Create New List';
-  static const String delete = 'Delete';
-  static const String deleteList = 'Delete List';
-  static const String endOfTheList = "You've reached the end of the list";
-  static const String error = 'Error';
-  static const String editListName = 'Edit List Name';
-  static const String exercise = 'Exercise';
-  static const String exercisesTitle = 'Exercises for';
-  static const String exerciseRemoved = 'Exercises removed from Favorites';
-  static const String equipment = 'Equipment:';
-  static const String failedToLoadBodyParts = 'Failed to load body parts';
-  static const String failedToLoadExercises = 'Failed to load exercises';
-  static const String failedToLoadGif = 'Failed to load GIF';
-  static const String favoriteLists = 'Favorite Lists';
-  static const String fetchDataError = 'Failed to load data';
-  static const String getStarted = 'Get Started';
-  static const String info = 'Info';
-  static const String listName = 'List Name';
-  static const String muscleZone = 'MuscleZone';
-  static const String next = 'Next';
-  static const String newListName = 'New List Name';
-  static const String noExercise = 'No exercises found for the selected filter';
-  static const String noExerciseInList =
-      'There are no exercises in this list yet';
-  static const String onboardingDesc1 =
-      'Get ready to transform your body with the best exercises with or without equipment, at home or at gym.';
-  static const String onboardingDesc2 =
-      'Track your progress and see the improvements you are making over time.';
-  static const String onboardingDesc3 =
-      'Let’s get started on your fitness journey today with personalized workouts.';
-  static const String onboardingTitle1 = 'Welcome to MuscleZone';
-  static const String onboardingTitle2 = 'Track Your Progress';
-  static const String onboardingTitle3 = 'Start Now';
-  static const String removeExercise = 'Remove Exercise';
-  static const String removeExerciseConfirm =
-      'Are you sure you want to remove this exercise from your favorites?';
-  static const String selectBodyPart = 'Select a Body Part';
-  static const String skip = 'Skip';
-  static const String success = 'Success';
-  static const String target = 'Target:';
+  static String get sureDelete => 'sureDelete'.tr();
+  static String get cancel => 'cancel'.tr();
+  static String get confirm => 'confirm'.tr();
+  static String get chooseEquipment => 'chooseEquipment'.tr();
+  static String get createNewList => 'createNewList'.tr();
+  static String get delete => 'delete'.tr();
+  static String get deleteList => 'deleteList'.tr();
+  static String get endOfTheList => 'endOfTheList'.tr();
+  static String get error => 'error'.tr();
+  static String get editListName => 'editListName'.tr();
+  static String get exercise => 'exercise'.tr();
+  static String get exercisesTitle => 'exercisesTitle'.tr();
+  static String get exerciseRemoved => 'exerciseRemoved'.tr();
+  static String get equipment => 'equipment'.tr();
+  static String get failedToLoadBodyParts => 'failedToLoadBodyParts'.tr();
+  static String get failedToLoadExercises => 'failedToLoadExercises'.tr();
+  static String get failedToLoadGif => 'failedToLoadGif'.tr();
+  static String get favoriteLists => 'favoriteLists'.tr();
+  static String get fetchDataError => 'fetchDataError'.tr();
+  static String get getStarted => 'getStarted'.tr();
+  static String get info => 'info'.tr();
+  static String get listName => 'listName'.tr();
+  static String get muscleZone => 'muscleZone'.tr();
+  static String get next => 'next'.tr();
+  static String get newListName => 'newListName'.tr();
+  static String get noExercise => 'noExercise'.tr();
+  static String get noExerciseInList => 'noExerciseInList'.tr();
+  static String get onboardingDesc1 => 'onboardingDesc1'.tr();
+  static String get onboardingDesc2 => 'onboardingDesc2'.tr();
+  static String get onboardingDesc3 => 'onboardingDesc3'.tr();
+  static String get onboardingTitle1 => 'onboardingTitle1'.tr();
+  static String get onboardingTitle2 => 'onboardingTitle2'.tr();
+  static String get onboardingTitle3 => 'onboardingTitle3'.tr();
+  static String get removeExercise => 'removeExercise'.tr();
+  static String get removeExerciseConfirm => 'removeExerciseConfirm'.tr();
+  static String get selectBodyPart => 'selectBodyPart'.tr();
+  static String get skip => 'skip'.tr();
+  static String get success => 'success'.tr();
+  static String get target => 'target'.tr();
 }

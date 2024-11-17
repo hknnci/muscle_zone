@@ -6,14 +6,15 @@ import 'package:muscle_zone/core/constants/app_keys.dart';
 /// Allows customization of title, content and button texts.
 class CustomDialog extends StatelessWidget {
   /// Constructs a [CustomDialog] widget.
-  const CustomDialog({
+  CustomDialog({
     required this.title,
     required this.content,
-    this.cancelText = AppKeys.cancel,
-    this.confirmText = AppKeys.confirm,
+    String? cancelText,
+    String? confirmText,
     this.confirmColor,
     super.key,
-  });
+  })  : cancelText = cancelText ?? AppKeys.cancel,
+        confirmText = confirmText ?? AppKeys.confirm;
 
   /// The title text of the dialog
   final String title;
@@ -34,8 +35,8 @@ class CustomDialog extends StatelessWidget {
   static Future<bool?> show({
     required String title,
     required String content,
-    String cancelText = AppKeys.cancel,
-    String confirmText = AppKeys.confirm,
+    String? cancelText,
+    String? confirmText,
     Color? confirmColor,
   }) {
     return Get.dialog<bool>(

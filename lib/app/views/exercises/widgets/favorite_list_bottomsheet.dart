@@ -64,7 +64,7 @@ class FavoriteListsBottomSheet extends GetView<FavoriteListController> {
                       Expanded(
                         child: TextField(
                           controller: controller.newListController,
-                          decoration: const InputDecoration(
+                          decoration: InputDecoration(
                             hintText: AppKeys.newListName,
                           ),
                         ),

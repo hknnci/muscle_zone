@@ -5,14 +5,15 @@ import 'package:muscle_zone/core/constants/app_keys.dart';
 /// A customizable text input dialog widget.
 class CustomInputDialog extends StatelessWidget {
   /// Constructs a [CustomInputDialog] widget.
-  const CustomInputDialog({
+  CustomInputDialog({
     required this.title,
     required this.hintText,
     required this.initialValue,
     super.key,
-    this.cancelText = AppKeys.cancel,
-    this.confirmText = AppKeys.confirm,
-  });
+    String? cancelText,
+    String? confirmText,
+  })  : cancelText = cancelText ?? AppKeys.cancel,
+        confirmText = confirmText ?? AppKeys.confirm;
 
   /// The title text of the dialog
   final String title;
@@ -48,11 +49,11 @@ class CustomInputDialog extends StatelessWidget {
           actions: [
             TextButton(
               onPressed: () => Get.back<String>(),
-              child: const Text(AppKeys.cancel),
+              child: Text(AppKeys.cancel),
             ),
             TextButton(
               onPressed: () => Get.back(result: controller.text),
-              child: const Text(AppKeys.confirm),
+              child: Text(AppKeys.confirm),
             ),
           ],
         ),
