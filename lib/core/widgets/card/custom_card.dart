@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:muscle_zone/core/extensions/string_extensions.dart';
 import 'package:muscle_zone/core/widgets/texts/custom_text.dart';
 
 /// A custom card widget for displaying exercise information.
@@ -38,7 +38,7 @@ class CustomCard extends StatelessWidget {
                 children: [
                   const Icon(Icons.fitness_center, size: 40),
                   const SizedBox(height: 20),
-                  CustomText.bodyMedium(bodyPart.capitalizeFirst!),
+                  CustomText.bodyMedium(bodyPart.toTitleCase()),
                 ],
               ),
         ),

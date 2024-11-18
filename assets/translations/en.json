@@ -1,5 +1,6 @@
 {
     "all": "All",
+    "apply": "Apply",
     "sureDelete": "Are you sure you want to delete this list?",
     "cancel": "Cancel",
     "confirm": "Confirm",
@@ -7,6 +8,7 @@
     "createNewList": "Create New List",
     "delete": "Delete",
     "deleteList": "Delete List",
+    "filterExercises": "Filter Exercises",
     "endOfTheList": "You've reached the end of the list",
     "error": "Error",
     "editListName": "Edit List Name",

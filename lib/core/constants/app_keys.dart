@@ -4,6 +4,7 @@ import 'package:easy_localization/easy_localization.dart';
 /// Contains all the static string constants used in the application
 class AppKeys {
   static String get all => 'all'.tr();
+  static String get apply => 'apply'.tr();
   static String get sureDelete => 'sureDelete'.tr();
   static String get cancel => 'cancel'.tr();
   static String get confirm => 'confirm'.tr();
@@ -11,6 +12,7 @@ class AppKeys {
   static String get createNewList => 'createNewList'.tr();
   static String get delete => 'delete'.tr();
   static String get deleteList => 'deleteList'.tr();
+  static String get filterExercises => 'filterExercises'.tr();
   static String get endOfTheList => 'endOfTheList'.tr();
   static String get error => 'error'.tr();
   static String get editListName => 'editListName'.tr();

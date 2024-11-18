@@ -14,8 +14,8 @@ class ApiTranslations {
     'neck': 'Boyun',
     'shoulders': 'Omuz',
     'upper arms': 'Üst Kol',
-    'upper legs': 'Üst Bacak',
-    'waist': 'Bel',
+    'upper legs': 'Üst Bacak, Kalça',
+    'waist': 'Bel, Karın Kası',
   };
 
   /// Equipment translations

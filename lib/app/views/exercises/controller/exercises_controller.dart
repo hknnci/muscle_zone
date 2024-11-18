@@ -25,11 +25,17 @@ class ExercisesController extends GetxController {
   /// List of available equipment types
   final RxList<String> equipmentList = <String>[].obs;
 
+  /// List of available target muscle groups
+  final RxList<String> targetList = <String>[].obs;
+
   /// Current page index in the PageView
   final RxInt currentPageIndex = 0.obs;
 
   /// Currently selected equipment filter
   final RxString selectedEquipment = ''.obs;
+
+  /// Currently selected target filter
+  final RxString selectedTarget = ''.obs;
 
   /// Loading state indicator
   final RxBool isLoading = false.obs;
@@ -57,6 +63,7 @@ class ExercisesController extends GetxController {
     await Future.wait([
       fetchExercises(),
       fetchEquipmentList(),
+      fetchTargetList(),
     ]);
     pageController.addListener(_handleScroll);
   }
@@ -105,7 +112,7 @@ class ExercisesController extends GetxController {
         return;
       }
 
-      await _filterExercises(equipment);
+      await _filterExercises(selectedEquipment.value);
     } catch (e) {
       // Handle error silently
     } finally {
@@ -130,6 +137,51 @@ class ExercisesController extends GetxController {
       equipmentList
         ..value = equipment
         ..insert(0, AppKeys.all);
+    } catch (e) {
+      // Handle error silently
+    } finally {
+      isLoading(false);
+    }
+  }
+
+  /// Fetch available target list based on selected body part
+  Future<void> fetchTargetList() async {
+    try {
+      isLoading(true);
+
+      // First get all exercises for the selected body part
+      final bodyPartExercises = await _exerciseService.getExercisesByBodyPart(
+        bodyPart,
+        limit: 1000,
+      );
+
+      // Filter target muscles for the selected body part
+      final targetSet =
+          bodyPartExercises.map((exercise) => exercise.target).toSet();
+      final targets = targetSet.toList()..sort();
+
+      targetList
+        ..value = targets
+        ..insert(0, AppKeys.all);
+    } catch (e) {
+      // Handle error silently
+    } finally {
+      isLoading(false);
+    }
+  }
+
+  /// Apply both equipment and target filters
+  Future<void> applyFilters() async {
+    try {
+      isLoading(true);
+      _offset = 0;
+
+      if (_isAllFiltersSelected) {
+        await fetchExercises();
+        return;
+      }
+
+      await _filterExercises();
     } catch (e) {
       // Handle error silently
     } finally {
@@ -185,18 +237,25 @@ class ExercisesController extends GetxController {
   bool _isAllEquipmentSelected(String equipment) =>
       equipment.toLowerCase() == 'all';
 
-  Future<void> _filterExercises(String equipment) async {
+  bool get _isAllFiltersSelected =>
+      (selectedEquipment.value.isEmpty ||
+          selectedEquipment.value.toLowerCase() == 'all') &&
+      (selectedTarget.value.isEmpty ||
+          selectedTarget.value.toLowerCase() == 'all');
+
+  Future<void> _filterExercises([String? equipment]) async {
     final allExercises = await _exerciseService.getExercisesByBodyPart(
       bodyPart,
       limit: 1000,
     );
 
-    final filteredList = allExercises
-        .where(
-          (exercise) =>
-              exercise.equipment.toLowerCase() == equipment.toLowerCase(),
-        )
-        .toList();
+    final filteredList = allExercises.where((exercise) {
+      if (equipment != null) {
+        return exercise.equipment.toLowerCase() == equipment.toLowerCase();
+      }
+      return exercise.equipment.toLowerCase() ==
+          selectedEquipment.value.toLowerCase();
+    }).toList();
 
     final initialExercises = filteredList.take(_pageLimit).toList();
     exercises.assignAll(filteredList);

@@ -44,7 +44,7 @@ class ExercisesView extends GetView<ExercisesController> {
   void _showEquipmentFilterBottomSheet(BuildContext context) {
     showModalBottomSheet<void>(
       context: context,
-      builder: (context) => EquipmentFilterBottomSheet(controller: controller),
+      builder: (context) => FilterBottomSheet(controller: controller),
     );
   }
 }

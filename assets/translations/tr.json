@@ -1,5 +1,6 @@
 {
     "all": "Tümü",
+    "apply": "Uygula",
     "sureDelete": "Bu listeyi silmek istediğinizden emin misiniz?",
     "cancel": "İptal",
     "confirm": "Onayla",
@@ -7,6 +8,7 @@
     "createNewList": "Yeni Liste Oluştur",
     "delete": "Sil",
     "deleteList": "Listeyi Sil",
+    "filterExercises": "Egzersizleri Filtrele",
     "endOfTheList": "Listenin sonuna geldiniz",
     "error": "Hata",
     "editListName": "Liste Adını Düzenle",
