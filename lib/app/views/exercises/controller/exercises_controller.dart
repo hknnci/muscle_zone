@@ -129,7 +129,7 @@ class ExercisesController extends GetxController {
       final equipment = await _exerciseService.getEquipmentList();
       equipmentList
         ..value = equipment
-        ..insert(0, 'All');
+        ..insert(0, AppKeys.all);
     } catch (e) {
       // Handle error silently
     } finally {

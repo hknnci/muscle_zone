@@ -30,6 +30,7 @@ dependencies:
   # UI Components
   flutter_svg: ^2.0.14
   cached_network_image: ^3.4.1
+  google_fonts: ^6.2.1
 
 dev_dependencies:
   flutter_test:
@@ -50,13 +51,3 @@ flutter:
     - assets/images/
     - assets/translations/
     - .env
-
-  fonts:
-    - family: Poppins
-      fonts:
-        - asset: assets/fonts/Poppins-Regular.ttf
-        - asset: assets/fonts/Poppins-Bold.ttf
-    - family: Lato
-      fonts:
-        - asset: assets/fonts/Lato-Regular.ttf
-        - asset: assets/fonts/Lato-Bold.ttf

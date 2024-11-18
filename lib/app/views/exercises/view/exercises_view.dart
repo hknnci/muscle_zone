@@ -4,7 +4,7 @@ import 'package:muscle_zone/app/views/exercises/controller/exercises_controller.
 import 'package:muscle_zone/app/views/exercises/widgets/exercises_body.dart';
 import 'package:muscle_zone/app/views/exercises/widgets/favorite_button.dart';
 import 'package:muscle_zone/app/views/exercises/widgets/filter_bottomsheet.dart';
-import 'package:muscle_zone/core/extensions/string_extensions.dart';
+import 'package:muscle_zone/core/utils/translation_helper.dart';
 import 'package:muscle_zone/core/widgets/background/gradient_background.dart';
 import 'package:muscle_zone/core/widgets/texts/gradient_text.dart';
 
@@ -25,7 +25,7 @@ class ExercisesView extends GetView<ExercisesController> {
         appBar: AppBar(
           centerTitle: true,
           title: GradientText(
-            bodyPart.toTitleCase(),
+            TranslationHelper.translateBodyPart(bodyPart),
             isAppBar: true,
           ),
           actions: [

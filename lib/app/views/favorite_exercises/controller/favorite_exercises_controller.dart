@@ -44,7 +44,7 @@ class FavoriteExercisesController extends GetxController {
       );
       exercises.value = exercisesList.whereType<BaseObjectModel>().toList();
     } catch (e) {
-      print('An error occurred while loading exercises: $e');
+      CustomFlushbar.showError(AppKeys.failedToLoadExercises);
     } finally {
       isLoading.value = false;
     }

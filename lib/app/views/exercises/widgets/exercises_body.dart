@@ -91,11 +91,7 @@ class _ExerciseContent extends StatelessWidget {
               child: Image.network(
                 exercise.gifUrl,
                 fit: BoxFit.cover,
-                loadingBuilder: (
-                  BuildContext context,
-                  Widget child,
-                  ImageChunkEvent? loadingProgress,
-                ) {
+                loadingBuilder: (context, child, loadingProgress) {
                   if (loadingProgress == null) return child;
                   return const Center(child: CircularProgressIndicator());
                 },
@@ -111,11 +107,11 @@ class _ExerciseContent extends StatelessWidget {
                 CustomText.titleLarge(exercise.name.toTitleCase()),
                 const SizedBox(height: 8),
                 CustomText.bodyLarge(
-                  '${AppKeys.target} ${exercise.target.toTitleCase()}',
+                  '${AppKeys.target} ${exercise.translatedTarget}',
                 ),
                 const SizedBox(height: 8),
                 CustomText.bodyLarge(
-                  '${AppKeys.equipment} ${exercise.equipment.toTitleCase()}',
+                  '${AppKeys.equipment} ${exercise.translatedEquipment}',
                 ),
               ],
             ),

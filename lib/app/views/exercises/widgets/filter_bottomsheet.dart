@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:muscle_zone/app/views/exercises/controller/exercises_controller.dart';
 import 'package:muscle_zone/core/constants/app_keys.dart';
-import 'package:muscle_zone/core/extensions/string_extensions.dart';
+import 'package:muscle_zone/core/utils/translation_helper.dart';
 import 'package:muscle_zone/core/widgets/texts/custom_text.dart';
 
 /// A bottom sheet widget that filters exercises by equipment.
@@ -47,7 +47,11 @@ class EquipmentFilterBottomSheet extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: ListTile(
-                    title: Text(equipment.toTitleCase()),
+                    title: Text(
+                      equipment.toLowerCase() == 'all'
+                          ? AppKeys.all
+                          : TranslationHelper.translateEquipment(equipment),
+                    ),
                     onTap: () {
                       controller.filterExercisesByEquipment(equipment);
                       Get.back<void>();

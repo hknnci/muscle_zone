@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:muscle_zone/core/utils/translation_helper.dart';
 
 part 'base_object_model.g.dart';
 
@@ -44,4 +45,15 @@ class BaseObjectModel {
 
   /// Step-by-step instructions for performing the exercise
   final List<String> instructions;
+
+  /// Returns the translated body part name
+  String get translatedBodyPart =>
+      TranslationHelper.translateBodyPart(bodyPart);
+
+  /// Returns the translated equipment name
+  String get translatedEquipment =>
+      TranslationHelper.translateEquipment(equipment);
+
+  /// Returns the translated target muscle name
+  String get translatedTarget => TranslationHelper.translateTarget(target);
 }

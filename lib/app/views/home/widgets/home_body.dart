@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:muscle_zone/app/views/home/controller/home_controller.dart';
 import 'package:muscle_zone/core/constants/app_keys.dart';
 import 'package:muscle_zone/core/constants/routes.dart';
+import 'package:muscle_zone/core/utils/translation_helper.dart';
 import 'package:muscle_zone/core/widgets/card/custom_card.dart';
 import 'package:muscle_zone/core/widgets/card/custom_grid.dart';
 import 'package:muscle_zone/core/widgets/texts/custom_text.dart';
@@ -39,7 +40,7 @@ class HomeBody extends StatelessWidget {
               crossAxisCount: 3,
               items: controller.bodyParts,
               itemBuilder: (context, bodyPart) => CustomCard(
-                bodyPart: bodyPart,
+                bodyPart: TranslationHelper.translateBodyPart(bodyPart),
                 onTap: () => Get.toNamed<dynamic>(
                   Routes.exercises,
                   arguments: bodyPart,

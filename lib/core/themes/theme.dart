@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 /// Configuration class for Material Design theme.
 class MaterialTheme {
@@ -143,74 +144,60 @@ class MaterialTheme {
 
   /// Returns the light text theme.
   static TextTheme lightTextTheme() {
-    return const TextTheme(
-      displayLarge: TextStyle(
-        fontFamily: 'Poppins',
+    return TextTheme(
+      displayLarge: GoogleFonts.poppins(
         fontSize: 57,
         fontWeight: FontWeight.normal,
       ),
-      displayMedium: TextStyle(
-        fontFamily: 'Poppins',
+      displayMedium: GoogleFonts.poppins(
         fontSize: 45,
         fontWeight: FontWeight.normal,
       ),
-      displaySmall: TextStyle(
-        fontFamily: 'Poppins',
+      displaySmall: GoogleFonts.poppins(
         fontSize: 36,
         fontWeight: FontWeight.normal,
       ),
-      headlineLarge: TextStyle(
-        fontFamily: 'Poppins',
+      headlineLarge: GoogleFonts.poppins(
         fontSize: 32,
         fontWeight: FontWeight.normal,
       ),
-      headlineMedium: TextStyle(
-        fontFamily: 'Poppins',
+      headlineMedium: GoogleFonts.poppins(
         fontSize: 28,
         fontWeight: FontWeight.normal,
       ),
-      headlineSmall: TextStyle(
-        fontFamily: 'Poppins',
+      headlineSmall: GoogleFonts.poppins(
         fontSize: 24,
         fontWeight: FontWeight.normal,
       ),
-      titleLarge: TextStyle(
-        fontFamily: 'Poppins',
+      titleLarge: GoogleFonts.poppins(
         fontSize: 20,
         fontWeight: FontWeight.normal,
       ),
-      titleMedium: TextStyle(
-        fontFamily: 'Lato',
+      titleMedium: GoogleFonts.inter(
         fontSize: 16,
         fontWeight: FontWeight.w500,
       ),
-      titleSmall: TextStyle(
-        fontFamily: 'Lato',
+      titleSmall: GoogleFonts.inter(
         fontSize: 14,
         fontWeight: FontWeight.w500,
       ),
-      bodyLarge: TextStyle(
-        fontFamily: 'Lato',
+      bodyLarge: GoogleFonts.inter(
         fontSize: 16,
         fontWeight: FontWeight.normal,
       ),
-      bodyMedium: TextStyle(
-        fontFamily: 'Lato',
+      bodyMedium: GoogleFonts.inter(
         fontSize: 14,
         fontWeight: FontWeight.normal,
       ),
-      bodySmall: TextStyle(
-        fontFamily: 'Lato',
+      bodySmall: GoogleFonts.inter(
         fontSize: 12,
         fontWeight: FontWeight.normal,
       ),
-      labelLarge: TextStyle(
-        fontFamily: 'Lato',
+      labelLarge: GoogleFonts.inter(
         fontSize: 14,
         fontWeight: FontWeight.w500,
       ),
-      labelSmall: TextStyle(
-        fontFamily: 'Lato',
+      labelSmall: GoogleFonts.inter(
         fontSize: 11,
         fontWeight: FontWeight.w500,
       ),

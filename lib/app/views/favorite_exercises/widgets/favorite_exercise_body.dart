@@ -75,9 +75,18 @@ class FavoriteExercisesBody extends GetView<FavoriteExercisesController> {
                       overflow: TextOverflow.ellipsis,
                     ),
                     const SizedBox(height: 2),
-                    _buildInfoRow(Icons.fitness_center, exercise.bodyPart),
-                    _buildInfoRow(Icons.sports_gymnastics, exercise.equipment),
-                    _buildInfoRow(Icons.track_changes, exercise.target),
+                    _buildInfoRow(
+                      Icons.fitness_center,
+                      exercise.translatedBodyPart,
+                    ),
+                    _buildInfoRow(
+                      Icons.sports_gymnastics,
+                      exercise.translatedEquipment,
+                    ),
+                    _buildInfoRow(
+                      Icons.track_changes,
+                      exercise.translatedTarget,
+                    ),
                   ],
                 ),
               ),
@@ -96,10 +105,7 @@ class FavoriteExercisesBody extends GetView<FavoriteExercisesController> {
           Icon(icon, size: 16),
           const SizedBox(width: 4),
           Expanded(
-            child: CustomText.bodySmall(
-              text.toTitleCase(),
-              textAlign: TextAlign.start,
-            ),
+            child: CustomText.bodySmall(text, textAlign: TextAlign.start),
           ),
         ],
       ),
