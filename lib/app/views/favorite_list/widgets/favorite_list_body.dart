@@ -37,7 +37,9 @@ class FavoriteListBody extends StatelessWidget {
                 ),
                 IconButton(
                   icon: const Icon(Icons.check),
-                  onPressed: controller.saveNewList,
+                  onPressed: () => controller.saveNewList(
+                    isFromListScreen: true,
+                  ),
                 ),
               ],
             ),

@@ -14,6 +14,7 @@ class AppKeys {
   static String get error => 'error'.tr();
   static String get editListName => 'editListName'.tr();
   static String get exercise => 'exercise'.tr();
+  static String get exerciseAddedToList => 'exerciseAddedToList'.tr();
   static String get exercisesTitle => 'exercisesTitle'.tr();
   static String get exerciseRemoved => 'exerciseRemoved'.tr();
   static String get equipment => 'equipment'.tr();
@@ -24,7 +25,10 @@ class AppKeys {
   static String get fetchDataError => 'fetchDataError'.tr();
   static String get getStarted => 'getStarted'.tr();
   static String get info => 'info'.tr();
+  static String get listCreated => 'listCreated'.tr();
+  static String get listDeleted => 'listDeleted'.tr();
   static String get listName => 'listName'.tr();
+  static String get listNameUpdated => 'listNameUpdated'.tr();
   static String get next => 'next'.tr();
   static String get newListName => 'newListName'.tr();
   static String get noExercise => 'noExercise'.tr();

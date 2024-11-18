@@ -81,40 +81,46 @@ class _ExerciseContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Image.network(
-            exercise.gifUrl,
-            fit: BoxFit.cover,
-            loadingBuilder: (
-              BuildContext context,
-              Widget child,
-              ImageChunkEvent? loadingProgress,
-            ) {
-              if (loadingProgress == null) return child;
-              return const Center(child: CircularProgressIndicator());
-            },
-            errorBuilder: (context, error, stackTrace) {
-              return CustomText.bodyLarge(AppKeys.failedToLoadGif);
-            },
-          ),
-          const SizedBox(height: 16),
-          Column(
-            children: [
-              CustomText.titleLarge(exercise.name.toTitleCase()),
-              CustomText.bodyLarge(
-                '${AppKeys.target} ${exercise.target.toTitleCase()}',
+    return Center(
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Image.network(
+                exercise.gifUrl,
+                fit: BoxFit.cover,
+                loadingBuilder: (
+                  BuildContext context,
+                  Widget child,
+                  ImageChunkEvent? loadingProgress,
+                ) {
+                  if (loadingProgress == null) return child;
+                  return const Center(child: CircularProgressIndicator());
+                },
+                errorBuilder: (context, error, stackTrace) {
+                  return CustomText.bodyLarge(AppKeys.failedToLoadGif);
+                },
               ),
-              const SizedBox(height: 8),
-              CustomText.bodyLarge(
-                '${AppKeys.equipment} ${exercise.equipment.toTitleCase()}',
-              ),
-            ],
-          ),
-        ],
+            ),
+            const SizedBox(height: 24),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                CustomText.titleLarge(exercise.name.toTitleCase()),
+                const SizedBox(height: 8),
+                CustomText.bodyLarge(
+                  '${AppKeys.target} ${exercise.target.toTitleCase()}',
+                ),
+                const SizedBox(height: 8),
+                CustomText.bodyLarge(
+                  '${AppKeys.equipment} ${exercise.equipment.toTitleCase()}',
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

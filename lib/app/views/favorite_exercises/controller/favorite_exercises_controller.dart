@@ -7,6 +7,7 @@ import 'package:muscle_zone/app/services/local/hive_service.dart';
 import 'package:muscle_zone/app/views/favorite_list/controller/favorite_list_controller.dart';
 import 'package:muscle_zone/core/constants/app_keys.dart';
 import 'package:muscle_zone/core/widgets/dialog/custom_dialog.dart';
+import 'package:muscle_zone/core/widgets/progress/custom_flushbar.dart';
 
 /// Controller class for managing favorite exercises.
 class FavoriteExercisesController extends GetxController {
@@ -63,6 +64,7 @@ class FavoriteExercisesController extends GetxController {
       await _hiveService.removeExerciseFromList(currentList, exerciseId);
       await loadExercises();
       Get.find<FavoriteListController>().loadFavoriteLists();
+      CustomFlushbar.showSuccess(AppKeys.exerciseRemoved);
     }
   }
 }

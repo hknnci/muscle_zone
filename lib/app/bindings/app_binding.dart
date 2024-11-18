@@ -38,7 +38,10 @@ class AppBinding implements Bindings {
       fenix: true,
     );
     Get.lazyPut(
-      () => FavoriteListController(Get.find<HiveService>()),
+      () => FavoriteListController(
+        Get.find<HiveService>(),
+        exerciseId: '',
+      ),
       fenix: true,
     );
     Get.lazyPut(

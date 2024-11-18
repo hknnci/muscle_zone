@@ -5,13 +5,18 @@ import 'package:muscle_zone/app/services/local/hive_service.dart';
 import 'package:muscle_zone/core/constants/app_keys.dart';
 import 'package:muscle_zone/core/widgets/dialog/custom_dialog.dart';
 import 'package:muscle_zone/core/widgets/dialog/custom_input_dialog.dart';
+import 'package:muscle_zone/core/widgets/progress/custom_flushbar.dart';
 
 /// Controller for managing favorite lists.
 class FavoriteListController extends GetxController {
   /// Constructs a [FavoriteListController] widget.
-  FavoriteListController(this._hiveService);
+  FavoriteListController(this._hiveService, {required this.exerciseId});
 
+  /// The HiveService instance for interacting with the local database.
   final HiveService _hiveService;
+
+  /// The ID of the exercise to be added to the favorite list.
+  late String exerciseId;
 
   /// The list of favorite lists.
   final favoriteLists = <FavoriteList>[].obs;
@@ -47,16 +52,28 @@ class FavoriteListController extends GetxController {
 
   /// Creates and saves a new favorite list.
   /// Saves the new list to local storage if the list name is not empty.
-  Future<void> saveNewList() async {
+  Future<void> saveNewList({bool isFromListScreen = false}) async {
     if (newListController.text.isNotEmpty) {
       final newList = FavoriteList(
         name: newListController.text,
-        exerciseIds: [],
+        exerciseIds: isFromListScreen ? [] : [exerciseId],
       );
       await _hiveService.addFavoriteList(newList);
       newListController.clear();
       isAddingNewList.value = false;
       loadFavoriteLists();
+
+      if (!isFromListScreen) {
+        Get.back<void>();
+      }
+
+      CustomFlushbar.showSuccess(
+        isFromListScreen
+            ? '${AppKeys.listCreated}: ${newList.name}'
+            : '${AppKeys.exerciseAddedToList}: ${newList.name}',
+      );
+
+      update();
     }
   }
 
@@ -65,7 +82,8 @@ class FavoriteListController extends GetxController {
   /// [exerciseId] the unique identifier of the exercise to add.
   Future<void> addExerciseToList(String listName, String exerciseId) async {
     await _hiveService.addExerciseToList(listName, exerciseId);
-    Get.back<void>();
+    loadFavoriteLists();
+    CustomFlushbar.showSuccess('${AppKeys.exerciseAddedToList}: $listName');
     update();
   }
 
@@ -81,6 +99,7 @@ class FavoriteListController extends GetxController {
     if (result != null && result.isNotEmpty) {
       await _hiveService.updateListName(list, result);
       loadFavoriteLists();
+      CustomFlushbar.showSuccess('${AppKeys.listNameUpdated}: $result');
     }
   }
 
@@ -97,6 +116,7 @@ class FavoriteListController extends GetxController {
     if (confirm ?? false) {
       await _hiveService.deleteList(list);
       loadFavoriteLists();
+      CustomFlushbar.showSuccess('${AppKeys.listDeleted}: ${list.name}');
     }
   }
 

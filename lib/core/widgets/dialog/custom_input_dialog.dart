@@ -3,17 +3,16 @@ import 'package:get/get.dart';
 import 'package:muscle_zone/core/constants/app_keys.dart';
 
 /// A customizable text input dialog widget.
-class CustomInputDialog extends StatelessWidget {
+class CustomInputDialog extends StatefulWidget {
   /// Constructs a [CustomInputDialog] widget.
-  CustomInputDialog({
+  const CustomInputDialog({
     required this.title,
     required this.hintText,
     required this.initialValue,
     super.key,
-    String? cancelText,
-    String? confirmText,
-  })  : cancelText = cancelText ?? AppKeys.cancel,
-        confirmText = confirmText ?? AppKeys.confirm;
+    this.cancelText,
+    this.confirmText,
+  });
 
   /// The title text of the dialog
   final String title;
@@ -25,10 +24,10 @@ class CustomInputDialog extends StatelessWidget {
   final String initialValue;
 
   /// The text of the cancel button
-  final String cancelText;
+  final String? cancelText;
 
   /// The text of the confirm button
-  final String confirmText;
+  final String? confirmText;
 
   /// Shows the dialog and returns a string result.
   static Future<String?> show({
@@ -36,51 +35,51 @@ class CustomInputDialog extends StatelessWidget {
     required String hintText,
     String? initialValue,
   }) async {
-    final controller = TextEditingController(text: initialValue);
+    return Get.dialog<String>(
+      CustomInputDialog(
+        title: title,
+        hintText: hintText,
+        initialValue: initialValue ?? '',
+      ),
+    );
+  }
 
-    try {
-      return await Get.dialog<String>(
-        AlertDialog(
-          title: Text(title),
-          content: TextField(
-            controller: controller,
-            decoration: InputDecoration(hintText: hintText),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Get.back<String>(),
-              child: Text(AppKeys.cancel),
-            ),
-            TextButton(
-              onPressed: () => Get.back(result: controller.text),
-              child: Text(AppKeys.confirm),
-            ),
-          ],
-        ),
-      );
-    } finally {
-      controller.dispose();
-    }
+  @override
+  State<CustomInputDialog> createState() => _CustomInputDialogState();
+}
+
+class _CustomInputDialogState extends State<CustomInputDialog> {
+  late TextEditingController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = TextEditingController(text: widget.initialValue);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final controller = TextEditingController(text: initialValue);
     return AlertDialog(
-      title: Text(title),
+      title: Text(widget.title),
       content: TextField(
-        controller: controller,
-        decoration: InputDecoration(hintText: hintText),
+        controller: _controller,
+        decoration: InputDecoration(hintText: widget.hintText),
         autofocus: true,
       ),
       actions: [
         TextButton(
-          onPressed: Get.back<String>,
-          child: Text(cancelText),
+          onPressed: () => Get.back<String>(),
+          child: Text(widget.cancelText ?? AppKeys.cancel),
         ),
         TextButton(
-          onPressed: () => Get.back(result: controller.text),
-          child: Text(confirmText),
+          onPressed: () => Get.back(result: _controller.text),
+          child: Text(widget.confirmText ?? AppKeys.confirm),
         ),
       ],
     );
