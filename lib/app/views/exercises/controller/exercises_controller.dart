@@ -61,23 +61,40 @@ class ExercisesController extends GetxController {
   /// Initialize controller data
   Future<void> _initializeData() async {
     await Future.wait([
-      fetchExercises(),
+      _fetchInitialExercises(),
+      _fetchFilterOptions(),
+    ]);
+    _setupScrollListener();
+  }
+
+  /// Fetch initial data for exercises and filter options
+  Future<void> _fetchInitialExercises() => fetchExercises();
+
+  /// Fetch available filter options
+  Future<void> _fetchFilterOptions() async {
+    await Future.wait([
       fetchEquipmentList(),
       fetchTargetList(),
     ]);
-    pageController.addListener(_handleScroll);
   }
 
-  /// Handle scroll events for pagination
+  /// Setup scroll listener for pagination
+  void _setupScrollListener() => pageController.addListener(_handleScroll);
+
+  /// Handle pagination on scroll
   void _handleScroll() {
-    final isAtEnd =
-        pageController.position.atEdge && pageController.position.pixels != 0;
-    if (isAtEnd && !isLoadingMore.value) {
+    if (_shouldLoadMore) {
       loadMoreExercises();
     }
   }
 
-  /// Fetch exercises with pagination support
+  /// Check if more items should be loaded
+  bool get _shouldLoadMore =>
+      pageController.position.atEdge &&
+      pageController.position.pixels != 0 &&
+      !isLoadingMore.value;
+
+  /// Fetch exercises with pagination
   Future<void> fetchExercises({bool isLoadMore = false}) async {
     try {
       _setLoadingState(isLoadMore);
@@ -93,105 +110,118 @@ class ExercisesController extends GetxController {
       }
 
       _updateExerciseLists(newExercises);
-    } catch (e) {
-      // Handle error silently
     } finally {
       _resetLoadingState(isLoadMore);
     }
   }
 
-  /// Filter exercises by equipment type
-  Future<void> filterExercisesByEquipment(String equipment) async {
-    try {
-      isLoading(true);
-      selectedEquipment.value = equipment;
-      _offset = 0;
-
-      if (_isAllEquipmentSelected(equipment)) {
-        await fetchExercises();
-        return;
-      }
-
-      await _filterExercises(selectedEquipment.value);
-    } catch (e) {
-      // Handle error silently
-    } finally {
-      isLoading(false);
-    }
-  }
-
-  /// Load more exercises when scrolling
-  Future<void> loadMoreExercises() async {
-    if (_shouldFetchNewExercises) {
-      await fetchExercises(isLoadMore: true);
-    } else {
-      await _loadMoreFilteredExercises();
-    }
-  }
-
-  /// Fetch available equipment list
+  /// Fetch and setup equipment list
   Future<void> fetchEquipmentList() async {
     try {
       isLoading(true);
       final equipment = await _exerciseService.getEquipmentList();
-      equipmentList
-        ..value = equipment
-        ..insert(0, AppKeys.all);
-    } catch (e) {
-      // Handle error silently
+      _updateFilterList(equipmentList, equipment);
     } finally {
       isLoading(false);
     }
   }
 
-  /// Fetch available target list based on selected body part
+  /// Fetch and setup target list
   Future<void> fetchTargetList() async {
     try {
       isLoading(true);
-
-      // First get all exercises for the selected body part
-      final bodyPartExercises = await _exerciseService.getExercisesByBodyPart(
+      final exercises = await _exerciseService.getExercisesByBodyPart(
         bodyPart,
         limit: 1000,
       );
 
-      // Filter target muscles for the selected body part
-      final targetSet =
-          bodyPartExercises.map((exercise) => exercise.target).toSet();
-      final targets = targetSet.toList()..sort();
+      final targets =
+          exercises.map((exercise) => exercise.target).toSet().toList()..sort();
 
-      targetList
-        ..value = targets
-        ..insert(0, AppKeys.all);
-    } catch (e) {
-      // Handle error silently
+      _updateFilterList(targetList, targets);
     } finally {
       isLoading(false);
     }
   }
 
-  /// Apply both equipment and target filters
+  /// Apply selected filters
   Future<void> applyFilters() async {
     try {
       isLoading(true);
       _offset = 0;
 
       if (_isAllFiltersSelected) {
-        await fetchExercises();
+        await _resetToAllExercises();
         return;
       }
 
-      await _filterExercises();
-    } catch (e) {
-      // Handle error silently
+      await _applySelectedFilters();
     } finally {
       isLoading(false);
     }
   }
 
-  /// Update current page index
-  // ignore: use_setters_to_change_properties
-  void updatePageIndex(int index) => currentPageIndex.value = index;
+  /// Reset to show all exercises
+  Future<void> _resetToAllExercises() async {
+    _clearExerciseLists();
+    await fetchExercises();
+    _resetPageView();
+  }
+
+  /// Apply currently selected filters
+  Future<void> _applySelectedFilters() async {
+    final allExercises = await _exerciseService.getExercisesByBodyPart(
+      bodyPart,
+      limit: 1000,
+    );
+
+    final filteredList = _filterExercises(allExercises);
+
+    if (filteredList.isEmpty) {
+      CustomFlushbar.showInfo(AppKeys.noExerciseInList);
+      return;
+    }
+
+    _updateFilteredExercises(filteredList);
+    _resetPageView();
+  }
+
+  /// Filter exercises based on selected criteria
+  List<BaseObjectModel> _filterExercises(List<BaseObjectModel> exercises) {
+    return exercises.where((exercise) {
+      return _matchesEquipmentFilter(exercise) &&
+          _matchesTargetFilter(exercise);
+    }).toList();
+  }
+
+  /// Check if exercise matches equipment filter
+  bool _matchesEquipmentFilter(BaseObjectModel exercise) {
+    if (_isFilterAll(selectedEquipment.value)) return true;
+    return exercise.equipment.toLowerCase() ==
+        selectedEquipment.value.toLowerCase();
+  }
+
+  /// Check if exercise matches target filter
+  bool _matchesTargetFilter(BaseObjectModel exercise) {
+    if (_isFilterAll(selectedTarget.value)) return true;
+    return exercise.target.toLowerCase() == selectedTarget.value.toLowerCase();
+  }
+
+  /// Helper Methods
+  void _updateFilterList(RxList<String> list, List<String> newItems) {
+    list
+      ..value = newItems
+      ..insert(0, AppKeys.all);
+  }
+
+  void _updateFilteredExercises(List<BaseObjectModel> filteredList) {
+    final initialExercises = filteredList.take(_pageLimit).toList();
+    exercises.assignAll(filteredList);
+    filteredExercises.assignAll(initialExercises);
+  }
+
+  bool _isFilterAll(String value) =>
+      value.isEmpty || value.toLowerCase() == AppKeys.all.toLowerCase();
 
   // Private helper methods
 
@@ -230,69 +260,34 @@ class ExercisesController extends GetxController {
     }
   }
 
-  bool get _shouldFetchNewExercises =>
-      selectedEquipment.value.toLowerCase() == 'all' ||
-      selectedEquipment.value.isEmpty;
-
-  bool _isAllEquipmentSelected(String equipment) =>
-      equipment.toLowerCase() == 'all';
-
   bool get _isAllFiltersSelected =>
       (selectedEquipment.value.isEmpty ||
-          selectedEquipment.value.toLowerCase() == 'all') &&
+          selectedEquipment.value.toLowerCase() == AppKeys.all.toLowerCase()) &&
       (selectedTarget.value.isEmpty ||
-          selectedTarget.value.toLowerCase() == 'all');
-
-  Future<void> _filterExercises([String? equipment]) async {
-    final allExercises = await _exerciseService.getExercisesByBodyPart(
-      bodyPart,
-      limit: 1000,
-    );
-
-    final filteredList = allExercises.where((exercise) {
-      if (equipment != null) {
-        return exercise.equipment.toLowerCase() == equipment.toLowerCase();
-      }
-      return exercise.equipment.toLowerCase() ==
-          selectedEquipment.value.toLowerCase();
-    }).toList();
-
-    final initialExercises = filteredList.take(_pageLimit).toList();
-    exercises.assignAll(filteredList);
-    filteredExercises.assignAll(initialExercises);
-    _resetPageView();
-  }
-
-  Future<void> _loadMoreFilteredExercises() async {
-    final start = filteredExercises.length;
-    final end = start + _pageLimit;
-
-    if (start >= exercises.length) {
-      CustomFlushbar.showInfo(AppKeys.endOfTheList);
-      return;
-    }
-
-    isLoadingMore(true);
-
-    final nextExercises = exercises.sublist(
-      start,
-      end > exercises.length ? exercises.length : end,
-    );
-
-    filteredExercises.addAll(nextExercises);
-    isLoadingMore(false);
-  }
+          selectedTarget.value.toLowerCase() == AppKeys.all.toLowerCase());
 
   void _resetPageView() {
-    currentPageIndex.value = 0;
     if (pageController.hasClients) {
       pageController.jumpToPage(0);
     }
+    currentPageIndex.value = 0;
+    _offset = 0;
+  }
+
+  /// Load more exercises for pagination
+  Future<void> loadMoreExercises() async {
+    await fetchExercises(isLoadMore: true);
   }
 
   @override
   void onClose() {
     pageController.dispose();
     super.onClose();
+  }
+
+  /// Update current page index
+  // ignore: use_setters_to_change_properties
+  void updatePageIndex(int index) {
+    currentPageIndex.value = index;
   }
 }

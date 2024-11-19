@@ -31,7 +31,7 @@ class CustomCard extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         elevation: 4,
         child: Padding(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(8),
           child: child ??
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
