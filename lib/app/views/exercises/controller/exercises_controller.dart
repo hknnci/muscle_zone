@@ -4,6 +4,7 @@ import 'package:muscle_zone/app/models/api/base_object_model.dart';
 import 'package:muscle_zone/app/services/api/exercise_service.dart';
 import 'package:muscle_zone/app/services/cache/exercises_cache_service.dart';
 import 'package:muscle_zone/core/constants/app_keys.dart';
+import 'package:muscle_zone/core/utils/service_helper.dart';
 import 'package:muscle_zone/core/widgets/progress/custom_flushbar.dart';
 
 /// Controller class that manages exercise-related operations and states
@@ -20,6 +21,7 @@ class ExercisesController extends GetxController {
 
   final ExerciseService _exerciseService;
   final ExercisesCacheService _cacheService;
+  final ServiceHelper _serviceHelper = ServiceHelper();
 
   /// The body part for which exercises are being fetched
   final String bodyPart;
@@ -68,11 +70,15 @@ class ExercisesController extends GetxController {
 
   /// Initialize controller data
   Future<void> _initializeData() async {
-    await Future.wait([
-      _fetchInitialExercises(),
-      _fetchFilterOptions(),
-    ]);
-    _setupScrollListener();
+    try {
+      await Future.wait([
+        _fetchInitialExercises(),
+        _fetchFilterOptions(),
+      ]);
+      _setupScrollListener();
+    } finally {
+      isLoading(false);
+    }
   }
 
   /// Fetch initial data for exercises and filter options
@@ -106,33 +112,41 @@ class ExercisesController extends GetxController {
   Future<void> fetchExercises({bool isLoadMore = false}) async {
     await _toggleLoadingState(isLoadMore, true);
 
-    try {
-      if (!_isAllFiltersSelected) {
-        final cachedExercises = _cacheService.getExercisesFromCache(bodyPart);
-        if (cachedExercises != null && !isLoadMore) {
-          _updateExerciseLists(cachedExercises);
-          return;
-        }
+    if (!_isAllFiltersSelected) {
+      final cachedExercises = _cacheService.getExercisesFromCache(bodyPart);
+      if (cachedExercises != null && !isLoadMore) {
+        _updateExerciseLists(cachedExercises);
+        return;
       }
-
-      final newExercises = await _exerciseService.getExercisesByBodyPart(
-        bodyPart,
-        offset: _offset,
-      );
-
-      if (!isLoadMore) {
-        _updateExerciseLists(newExercises);
-        _cacheService.cacheExercisesByBodyPart(bodyPart, newExercises);
-      } else {
-        _addNewExercises(newExercises);
-      }
-
-      _offset += _pageLimit;
-    } catch (e) {
-      CustomFlushbar.showError(AppKeys.failedToLoadExercises);
-    } finally {
-      await _toggleLoadingState(isLoadMore, false);
     }
+
+    if (!isLoadMore) {
+      await _serviceHelper.fetchData<BaseObjectModel>(
+        fetchFunction: () => _exerciseService.getExercisesByBodyPart(
+          bodyPart,
+          offset: _offset,
+        ),
+        targetList: exercises,
+        errorMessage: AppKeys.failedToLoadExercises,
+        onSuccess: (data) {
+          _updateExerciseLists(data);
+          _cacheService.cacheExercisesByBodyPart(bodyPart, data);
+        },
+      );
+    } else {
+      await _serviceHelper.fetchData<BaseObjectModel>(
+        fetchFunction: () => _exerciseService.getExercisesByBodyPart(
+          bodyPart,
+          offset: _offset,
+        ),
+        targetList: exercises,
+        errorMessage: AppKeys.failedToLoadExercises,
+        onSuccess: _addNewExercises,
+      );
+    }
+
+    _offset += _pageLimit;
+    await _toggleLoadingState(isLoadMore, false);
   }
 
   /// Fetch and cache a list of strings
@@ -141,21 +155,15 @@ class ExercisesController extends GetxController {
     Future<List<String>> Function() fetchFunction,
     RxList<String> list,
   ) async {
-    try {
-      isLoading(true);
-
-      final cachedList = _cacheService.getFilterListFromCache(cacheKey);
-      if (cachedList != null) {
-        _updateFilterList(list, cachedList);
-        return;
-      }
-
-      final fetchedList = await fetchFunction();
-      _updateFilterList(list, fetchedList);
-      _cacheService.cacheFilterList(cacheKey, fetchedList);
-    } finally {
-      isLoading(false);
+    final cachedList = _cacheService.getFilterListFromCache(cacheKey);
+    if (cachedList != null) {
+      _updateFilterList(list, cachedList);
+      return;
     }
+
+    final fetchedList = await fetchFunction();
+    _updateFilterList(list, fetchedList);
+    _cacheService.cacheFilterList(cacheKey, fetchedList);
   }
 
   /// Fetch equipment list
@@ -176,19 +184,16 @@ class ExercisesController extends GetxController {
 
   /// Apply selected filters
   Future<void> applyFilters() async {
-    try {
-      isLoading(true);
-      _offset = 0;
+    isLoading(true);
+    _offset = 0;
 
-      if (_isAllFiltersSelected) {
-        await _resetToAllExercises();
-        return;
-      }
-
+    if (_isAllFiltersSelected) {
+      await _resetToAllExercises();
+    } else {
       await _applySelectedFilters();
-    } finally {
-      isLoading(false);
     }
+
+    isLoading(false);
   }
 
   /// Reset to show all exercises

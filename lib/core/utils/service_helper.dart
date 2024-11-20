@@ -10,10 +10,15 @@ class ServiceHelper {
     required Future<List<T>> Function() fetchFunction,
     required RxList<T> targetList,
     String? errorMessage,
+    void Function(List<T>)? onSuccess,
   }) async {
     try {
       final result = await fetchFunction();
-      targetList.assignAll(result);
+      if (onSuccess != null) {
+        onSuccess(result);
+      } else {
+        targetList.assignAll(result);
+      }
     } catch (e) {
       if (e is ApiException) {
         // If it's a custom ApiException, show the detailed error message
