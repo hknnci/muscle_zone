@@ -2,6 +2,9 @@
 
 import 'package:get/get.dart';
 import 'package:muscle_zone/app/services/api/exercise_service.dart';
+import 'package:muscle_zone/app/services/cache/exercises_cache_service.dart';
+import 'package:muscle_zone/app/services/cache/favorite_exercises_cache_service.dart';
+import 'package:muscle_zone/app/services/cache/home_cache_service.dart';
 import 'package:muscle_zone/app/services/local/hive_service.dart';
 import 'package:muscle_zone/app/services/local/shared_pref_service.dart';
 import 'package:muscle_zone/app/views/exercises/controller/exercises_controller.dart';
@@ -22,6 +25,11 @@ class AppBinding implements Bindings {
     Get.put(SharedPrefService()).init();
     Get.put(HiveService()).init();
 
+    // Cache Service
+    Get.put(HomeCacheService(), permanent: true);
+    Get.put(FavoriteExercisesCacheService(), permanent: true);
+    Get.put(ExercisesCacheService(), permanent: true);
+
     // Other Services
     Get.put(AppService(Get.find<SharedPrefService>()));
     Get.put(ExerciseService(Get.find<ApiClient>()));
@@ -29,10 +37,16 @@ class AppBinding implements Bindings {
     // Controllers
     Get.put(SplashController(Get.find<AppService>()));
     Get.lazyPut(() => OnboardingController(Get.find<SharedPrefService>()));
-    Get.lazyPut(() => HomeController(Get.find<ExerciseService>()));
+    Get.lazyPut(
+      () => HomeController(
+        Get.find<ExerciseService>(),
+        Get.find<HomeCacheService>(),
+      ),
+    );
     Get.lazyPut(
       () => ExercisesController(
         Get.find<ExerciseService>(),
+        Get.find<ExercisesCacheService>(),
         bodyPart: Get.arguments as String? ?? '',
       ),
       fenix: true,
@@ -48,6 +62,7 @@ class AppBinding implements Bindings {
       () => FavoriteExercisesController(
         Get.find<HiveService>(),
         Get.find<ExerciseService>(),
+        Get.find<FavoriteExercisesCacheService>(),
       ),
       fenix: true,
     );

@@ -2,6 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:muscle_zone/app/models/api/base_object_model.dart';
 import 'package:muscle_zone/app/services/api/exercise_service.dart';
+import 'package:muscle_zone/app/services/cache/exercises_cache_service.dart';
 import 'package:muscle_zone/core/constants/app_keys.dart';
 import 'package:muscle_zone/core/widgets/progress/custom_flushbar.dart';
 
@@ -9,9 +10,16 @@ import 'package:muscle_zone/core/widgets/progress/custom_flushbar.dart';
 class ExercisesController extends GetxController {
   /// Constructor for ExercisesController
   /// _exerciseService is the service responsible for exercise-related API calls
-  ExercisesController(this._exerciseService, {required this.bodyPart});
+  /// _cacheService is the service responsible for caching exercises data
+  /// bodyPart is the body part for which exercises are being fetched
+  ExercisesController(
+    this._exerciseService,
+    this._cacheService, {
+    required this.bodyPart,
+  });
 
   final ExerciseService _exerciseService;
+  final ExercisesCacheService _cacheService;
 
   /// The body part for which exercises are being fetched
   final String bodyPart;
@@ -73,8 +81,8 @@ class ExercisesController extends GetxController {
   /// Fetch available filter options
   Future<void> _fetchFilterOptions() async {
     await Future.wait([
-      fetchEquipmentList(),
-      fetchTargetList(),
+      _fetchAndCacheList('equipment', fetchEquipmentList, equipmentList),
+      _fetchAndCacheList('target', fetchTargetList, targetList),
     ]);
   }
 
@@ -96,52 +104,74 @@ class ExercisesController extends GetxController {
 
   /// Fetch exercises with pagination
   Future<void> fetchExercises({bool isLoadMore = false}) async {
+    await _toggleLoadingState(isLoadMore, true);
+
     try {
-      _setLoadingState(isLoadMore);
+      if (!_isAllFiltersSelected) {
+        final cachedExercises = _cacheService.getExercisesFromCache(bodyPart);
+        if (cachedExercises != null && !isLoadMore) {
+          _updateExerciseLists(cachedExercises);
+          return;
+        }
+      }
 
       final newExercises = await _exerciseService.getExercisesByBodyPart(
         bodyPart,
         offset: _offset,
       );
 
-      if (newExercises.isEmpty) {
-        _handleEmptyResponse(isLoadMore);
+      if (!isLoadMore) {
+        _updateExerciseLists(newExercises);
+        _cacheService.cacheExercisesByBodyPart(bodyPart, newExercises);
+      } else {
+        _addNewExercises(newExercises);
+      }
+
+      _offset += _pageLimit;
+    } catch (e) {
+      CustomFlushbar.showError(AppKeys.failedToLoadExercises);
+    } finally {
+      await _toggleLoadingState(isLoadMore, false);
+    }
+  }
+
+  /// Fetch and cache a list of strings
+  Future<void> _fetchAndCacheList(
+    String cacheKey,
+    Future<List<String>> Function() fetchFunction,
+    RxList<String> list,
+  ) async {
+    try {
+      isLoading(true);
+
+      final cachedList = _cacheService.getFilterListFromCache(cacheKey);
+      if (cachedList != null) {
+        _updateFilterList(list, cachedList);
         return;
       }
 
-      _updateExerciseLists(newExercises);
-    } finally {
-      _resetLoadingState(isLoadMore);
-    }
-  }
-
-  /// Fetch and setup equipment list
-  Future<void> fetchEquipmentList() async {
-    try {
-      isLoading(true);
-      final equipment = await _exerciseService.getEquipmentList();
-      _updateFilterList(equipmentList, equipment);
+      final fetchedList = await fetchFunction();
+      _updateFilterList(list, fetchedList);
+      _cacheService.cacheFilterList(cacheKey, fetchedList);
     } finally {
       isLoading(false);
     }
   }
 
-  /// Fetch and setup target list
-  Future<void> fetchTargetList() async {
-    try {
-      isLoading(true);
-      final exercises = await _exerciseService.getExercisesByBodyPart(
-        bodyPart,
-        limit: 1000,
-      );
+  /// Fetch equipment list
+  Future<List<String>> fetchEquipmentList() async {
+    return _exerciseService.getEquipmentList();
+  }
 
-      final targets =
-          exercises.map((exercise) => exercise.target).toSet().toList()..sort();
+  /// Fetch target list
+  Future<List<String>> fetchTargetList() async {
+    final exercises = await _exerciseService.getExercisesByBodyPart(
+      bodyPart,
+      limit: 1000,
+    );
 
-      _updateFilterList(targetList, targets);
-    } finally {
-      isLoading(false);
-    }
+    return exercises.map((exercise) => exercise.target).toSet().toList()
+      ..sort();
   }
 
   /// Apply selected filters
@@ -196,22 +226,25 @@ class ExercisesController extends GetxController {
 
   /// Check if exercise matches equipment filter
   bool _matchesEquipmentFilter(BaseObjectModel exercise) {
-    if (_isFilterAll(selectedEquipment.value)) return true;
-    return exercise.equipment.toLowerCase() ==
-        selectedEquipment.value.toLowerCase();
+    return _isFilterAll(selectedEquipment.value) ||
+        exercise.equipment.toLowerCase() ==
+            selectedEquipment.value.toLowerCase();
   }
 
-  /// Check if exercise matches target filter
   bool _matchesTargetFilter(BaseObjectModel exercise) {
-    if (_isFilterAll(selectedTarget.value)) return true;
-    return exercise.target.toLowerCase() == selectedTarget.value.toLowerCase();
+    return _isFilterAll(selectedTarget.value) ||
+        exercise.target.toLowerCase() == selectedTarget.value.toLowerCase();
   }
 
-  /// Helper Methods
   void _updateFilterList(RxList<String> list, List<String> newItems) {
     list
       ..value = newItems
       ..insert(0, AppKeys.all);
+  }
+
+  void _updateExerciseLists(List<BaseObjectModel> newExercises) {
+    exercises.value = newExercises;
+    filteredExercises.value = newExercises;
   }
 
   void _updateFilteredExercises(List<BaseObjectModel> filteredList) {
@@ -223,48 +256,22 @@ class ExercisesController extends GetxController {
   bool _isFilterAll(String value) =>
       value.isEmpty || value.toLowerCase() == AppKeys.all.toLowerCase();
 
-  // Private helper methods
-
-  void _setLoadingState(bool isLoadMore) {
-    if (isLoadMore) {
-      isLoadingMore(true);
-      _offset += _pageLimit;
-    } else {
-      isLoading(true);
-      _offset = 0;
-      _clearExerciseLists();
-    }
-  }
-
   void _clearExerciseLists() {
     exercises.clear();
     filteredExercises.clear();
   }
 
-  void _handleEmptyResponse(bool isLoadMore) {
+  Future<void> _toggleLoadingState(bool isLoadMore, bool state) async {
     if (isLoadMore) {
-      CustomFlushbar.showInfo(AppKeys.endOfTheList);
-    }
-  }
-
-  void _updateExerciseLists(List<BaseObjectModel> newExercises) {
-    exercises.addAll(newExercises);
-    filteredExercises.addAll(newExercises);
-  }
-
-  void _resetLoadingState(bool isLoadMore) {
-    if (isLoadMore) {
-      isLoadingMore(false);
+      isLoadingMore(state);
     } else {
-      isLoading(false);
+      isLoading(state);
     }
   }
 
   bool get _isAllFiltersSelected =>
-      (selectedEquipment.value.isEmpty ||
-          selectedEquipment.value.toLowerCase() == AppKeys.all.toLowerCase()) &&
-      (selectedTarget.value.isEmpty ||
-          selectedTarget.value.toLowerCase() == AppKeys.all.toLowerCase());
+      _isFilterAll(selectedEquipment.value) &&
+      _isFilterAll(selectedTarget.value);
 
   void _resetPageView() {
     if (pageController.hasClients) {
@@ -274,7 +281,7 @@ class ExercisesController extends GetxController {
     _offset = 0;
   }
 
-  /// Load more exercises for pagination
+  /// Load more exercises
   Future<void> loadMoreExercises() async {
     await fetchExercises(isLoadMore: true);
   }
@@ -285,9 +292,15 @@ class ExercisesController extends GetxController {
     super.onClose();
   }
 
-  /// Update current page index
+  /// Update the current page index
   // ignore: use_setters_to_change_properties
   void updatePageIndex(int index) {
     currentPageIndex.value = index;
+  }
+
+  /// Add new exercises to the list
+  void _addNewExercises(List<BaseObjectModel> newExercises) {
+    exercises.addAll(newExercises);
+    filteredExercises.addAll(newExercises);
   }
 }
