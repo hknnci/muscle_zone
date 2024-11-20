@@ -87,9 +87,18 @@ class ExercisesController extends GetxController {
   /// Fetch available filter options
   Future<void> _fetchFilterOptions() async {
     await Future.wait([
-      _fetchAndCacheList('equipment', fetchEquipmentList, equipmentList),
-      _fetchAndCacheList('target', fetchTargetList, targetList),
+      _fetchFilterList(fetchEquipmentList, equipmentList),
+      _fetchFilterList(fetchTargetList, targetList),
     ]);
+  }
+
+  /// Fetch a list of strings for filters
+  Future<void> _fetchFilterList(
+    Future<List<String>> Function() fetchFunction,
+    RxList<String> list,
+  ) async {
+    final fetchedList = await fetchFunction();
+    _updateFilterList(list, fetchedList);
   }
 
   /// Setup scroll listener for pagination
@@ -149,28 +158,6 @@ class ExercisesController extends GetxController {
     await _toggleLoadingState(isLoadMore, false);
   }
 
-  /// Fetch and cache a list of strings
-  Future<void> _fetchAndCacheList(
-    String cacheKey,
-    Future<List<String>> Function() fetchFunction,
-    RxList<String> list,
-  ) async {
-    final cachedList = _cacheService.getFilterListFromCache(cacheKey);
-    if (cachedList != null) {
-      _updateFilterList(list, cachedList);
-      return;
-    }
-
-    final fetchedList = await fetchFunction();
-    _updateFilterList(list, fetchedList);
-    _cacheService.cacheFilterList(cacheKey, fetchedList);
-  }
-
-  /// Fetch equipment list
-  Future<List<String>> fetchEquipmentList() async {
-    return _exerciseService.getEquipmentList();
-  }
-
   /// Fetch target list
   Future<List<String>> fetchTargetList() async {
     final exercises = await _exerciseService.getExercisesByBodyPart(
@@ -180,6 +167,11 @@ class ExercisesController extends GetxController {
 
     return exercises.map((exercise) => exercise.target).toSet().toList()
       ..sort();
+  }
+
+  /// Fetch equipment list
+  Future<List<String>> fetchEquipmentList() async {
+    return _exerciseService.getEquipmentList();
   }
 
   /// Apply selected filters
