@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:muscle_zone/core/constants/api_translations.dart';
+import 'package:muscle_zone/core/extensions/string_extensions.dart';
 
 /// Helper class for translating exercise-related terms from the API
 class TranslationHelper {
@@ -8,7 +9,7 @@ class TranslationHelper {
     // If the device language is Turkish, translate the body part
     return Get.locale?.languageCode == 'tr'
         ? ApiTranslations.bodyParts[bodyPart.toLowerCase()] ?? bodyPart
-        : bodyPart;
+        : bodyPart.toTitleCase();
   }
 
   /// Translates equipment based on device language
@@ -16,7 +17,7 @@ class TranslationHelper {
     // If the device language is Turkish, translate the equipment
     return Get.locale?.languageCode == 'tr'
         ? ApiTranslations.equipment[equipment.toLowerCase()] ?? equipment
-        : equipment;
+        : equipment.toTitleCase();
   }
 
   /// Translates target muscle based on device language
@@ -24,6 +25,6 @@ class TranslationHelper {
     // If the device language is Turkish, translate the target
     return Get.locale?.languageCode == 'tr'
         ? ApiTranslations.targets[target.toLowerCase()] ?? target
-        : target;
+        : target.toTitleCase();
   }
 }
