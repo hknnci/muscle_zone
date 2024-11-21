@@ -7,7 +7,7 @@ MuscleZone is a comprehensive fitness application developed using Flutter, desig
 🏋️ Custom workout program creation  
 💪 Muscle group specific exercises  
 🔧 Adaptable for equipment and no-equipment workouts  
-🌍 Multilingual support  
+🌍 Multilingual support [EN-TR]
 
 ## 📸 Screen Capture
 
