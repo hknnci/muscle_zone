@@ -298,6 +298,6 @@ class ExercisesController extends GetxController {
   /// Add new exercises to the list
   void _addNewExercises(List<BaseObjectModel> newExercises) {
     exercises.addAll(newExercises);
-    filteredExercises.addAll(newExercises);
+    filteredExercises.value = exercises;
   }
 }
